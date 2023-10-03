@@ -15,5 +15,5 @@ This project is a clone of the official IKEA website, aiming to replicate its co
 
 ## Landing Page
 
-To get started, you can visit our [NotIkea](https://notikea.onrender.com/). Here, you will find access to the Login and Signup pages. A demo user button has been provided for you to explore the website without the need to sign up.
+To get started, you can visit our [NotIkea](https://notikea-2t7l.onrender.com). Here, you will find access to the Login and Signup pages. A demo user button has been provided for you to explore the website without the need to sign up.
 
