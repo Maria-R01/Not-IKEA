@@ -7,12 +7,16 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+        __table_args__ = {'schema': SCHEMA} 
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+
+    reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan")
+    shopping_cart = db.relationship("ShoppingCart", back_populates="users", cascade="all, delete-orphan")
+    
 
     @property
     def password(self):
