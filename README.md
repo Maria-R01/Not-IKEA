@@ -1,4 +1,4 @@
-# NotIkea (IKEA Website Clone)
+# NotIKEA (IKEA Website Clone)
 
 A clone of the IKEA website.
 
