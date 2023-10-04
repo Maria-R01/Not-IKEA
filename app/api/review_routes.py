@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Review, db
+from ..forms import ReviewForm
 
 review_routes = Blueprint('reviews', __name__)
 
@@ -62,31 +63,30 @@ def create_new_review():
     Create a New Review:
     Creates a new review with the provided review text, star rating, and associated item.
     """
-    data = request.json
-    review_text = data.get('review')
-    stars = data.get('stars')
-    item_id = data.get('item_id')
+    form = ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        data = form.data
+        review_text = data['review']
+        stars = data['stars']
+        item_id = data['item_id']
+        user_id = data['user_id']
 
-    if not review_text or not stars or not item_id:
-        return jsonify({"message": "All fields (review, stars, item_id) are required"}), 400
-    
-    if stars is None or not (1 <= stars <= 5):
-        return jsonify({"message": "Stars must be between 1 and 5"}), 400
+        existing_review = Review.query.filter_by(user_id=current_user.id, item_id=item_id).first()
+        if existing_review:
+            return jsonify({"message": "You have already reviewed this item"}), 400
 
-    existing_review = Review.query.filter_by(user_id=current_user.id, item_id=item_id).first()
-    if existing_review:
-        return jsonify({"message": "You have already reviewed this item"}), 400
-
-    review = Review(
-        review=review_text,
-        stars=stars,
-        user_id=current_user.id,
-        item_id=item_id,
-    )
-
-    db.session.add(review)
-    db.session.commit()
-    return jsonify({"message": "Review created successfully", "id": review.id})
+        review = Review(
+            review=review_text,
+            stars=stars,
+            user_id=user_id,
+            item_id=item_id,
+        )
+        db.session.add(review)
+        db.session.commit()
+        return jsonify({"message": "Review created successfully", "id": review.id})
+    else: 
+         return jsonify({"errors": form.errors}), 400
 
 @review_routes.route('/<int:id>/update', methods=['PUT'])
 @login_required
