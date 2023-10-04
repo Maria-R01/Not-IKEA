@@ -16,7 +16,7 @@ class Item(db.Model):
 
     #relationships 
     reviews = db.relationship("Review", back_populates="item", cascade="all, delete-orphan")
-    shopping_carts = db.relationship("ShoppingCart", back_populates="items", cascade="all, delete-orphan")
+    # shopping_carts = db.relationship("ShoppingCart", back_populates="items", cascade="all, delete-orphan")
     item_shopping_cart =  db.relationship("ShoppingCart", back_populates="items", cascade="all, delete-orphan")
     item_image = db.relationship("Image", back_populates="item", cascade="all, delete-orphan")
 
