@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import ShoppingCart, Item, db
+from ..forms import AddToCartForm
 
 shopping_cart_routes = Blueprint('shopping_carts', __name__)
 
@@ -39,23 +40,30 @@ def add_item_to_cart(item_id):
     Add Item to Shopping Cart:
     Adds an item to the user's shopping cart. If the item is already in the cart, the quantity is updated.
     """
-    quantity = request.json.get('quantity', 1) 
-    item = Item.query.get(item_id)
-    if not item:
-        return jsonify({"message": "Item not found"}), 404
-    
-    if quantity > item.available_quantity:
-        return jsonify({"message": "Exceeds available quantity"}), 400
-    
-    cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=item_id).first()
-    if cart_item:
-        cart_item.quantity += quantity
-    else:
-        cart_item = ShoppingCart(user_id=current_user.id, item_id=item_id, quantity=quantity)
-        db.session.add(cart_item)
+    form = AddToCartForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        data = form.data
+        quantity = data['quantity']
+        item = Item.query.get(item_id)
 
-    db.session.commit()
-    return jsonify({"message": "Item added to cart successfully"})
+        if not item:
+            return jsonify({"message": "Item not found"}), 404
+
+        if quantity > item.available_quantity:
+            return jsonify({"message": "Exceeds available quantity"}), 400
+
+        cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=item_id).first()
+        if cart_item:
+            cart_item.quantity += quantity
+        else:
+            cart_item = ShoppingCart(user_id=current_user.id, item_id=item_id, quantity=quantity)
+            db.session.add(cart_item)
+
+        db.session.commit()
+        return jsonify({"message": "Item added to cart successfully"})
+    else:
+        return jsonify({"errors": form.errors}), 400
 
 @shopping_cart_routes.route('/update/<int:item_id>', methods=['PUT'])
 @login_required
