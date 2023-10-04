@@ -64,6 +64,7 @@ def add_item_to_cart(item_id):
         return jsonify({"message": "Item added to cart successfully"})
     else:
         return jsonify({"errors": form.errors}), 400
+    
 
 @shopping_cart_routes.route('/update/<int:item_id>', methods=['PUT'])
 @login_required

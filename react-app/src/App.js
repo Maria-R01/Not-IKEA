@@ -5,6 +5,10 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import Landing from "./components/Landing"
+import HomePage from "./components/HomePage"
+import IndividualItems from "./components/IndividualItems"
+import ShoppingCart from "./components/ShoppingCart"
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +28,10 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route exact path ="/" component={Landing} />
+          <Route exact path ="/home" component={HomePage} />
+          <Route exact path ="/item/:itemId" component={IndividualItems} />
+          <Route exact path ="/cart" component={ShoppingCart} />
         </Switch>
       )}
     </>
