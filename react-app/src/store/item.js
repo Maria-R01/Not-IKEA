@@ -9,7 +9,7 @@ export const getAllItems = (items) => ({
 
 //THUNKS
 // Thunk to fetch all items with their images and reviews
-export const fetchAllItemsThunk = () => async (dispatch) => {
+export const allItemsThunk = () => async (dispatch) => {
     const response = await fetch('/api/items/'); 
     if (response.ok) {
       const data = await response.json();
