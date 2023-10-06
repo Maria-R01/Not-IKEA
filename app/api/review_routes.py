@@ -84,7 +84,14 @@ def create_new_review():
         )
         db.session.add(review)
         db.session.commit()
-        return jsonify({"message": "Review created successfully", "id": review.id})
+        newly_created_review = {
+            "id": review.id,
+            "review": review.review,
+            "stars": review.stars,
+            "user_id": review.user_id,
+            "item_id": review.item_id,
+        }
+        return jsonify({"message": "Review created successfully", "review": newly_created_review})
     else: 
          return jsonify({"errors": form.errors}), 400
 
@@ -113,7 +120,7 @@ def update_existing_review(id):
     review.stars = stars
 
     db.session.commit()
-    return jsonify({"message": "Review updated successfully"})
+    return jsonify({"message": "Review updated successfully", "review": review})
 
 
 @review_routes.route('/<int:id>/delete', methods=['DELETE'])

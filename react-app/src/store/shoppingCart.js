@@ -6,19 +6,19 @@ export const CLEAR_CART = 'cart/CLEAR_CART'
 
 
 // ACTION CREATORS
-export const addToCart = (item) => ({
+export const addToCart = (itemToAdd) => ({
   type: ADD_TO_CART,
-  payload: item,
+  payload: itemToAdd,
 });
 
-export const updateCartItem = (itemId, quantity) => ({
+export const updateCartItem = (updatedCartItemQuantity) => ({
   type: UPDATE_CART_ITEM,
-  payload: { itemId, quantity },
+  payload: updatedCartItemQuantity,
 });
 
-export const removeFromCart = (itemId) => ({
+export const removeFromCart = (item) => ({
   type: REMOVE_FROM_CART,
-  payload: itemId,
+  payload: item,
 });
 
 export const clearCart = () => ({
@@ -27,27 +27,72 @@ export const clearCart = () => ({
 
 //THUNKS
 // Thunk to add an item to the cart
-export const addToCartThunk = (item) => async (dispatch) => {
-  // to make a POST request to your Flask API
-  // to add the item to the shopping cart and dispatch the 'addToCart' action.
+export const addToCartThunk = (item, quantity) => async (dispatch) => {
+  const itemToAdd = { item, quantity }
+  const response = await fetch(`/api/shopping_carts/add/${item.id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(itemToAdd),
+  });
+  if (response.ok) {
+    dispatch(addToCart(itemToAdd));
+  } else {
+    console.error('Error adding item to cart:', response.statusText);
+  }
 };
 
 // Thunk to update the quantity of an item in the cart
-export const updateCartItemThunk = (itemId, quantity) => async (dispatch) => {
-    // to make a PUT request to your Flask API
-    // to update the cart item's quantity and dispatch the 'updateCartItem' action.
+export const updateCartItemThunk = (item, newQuantity) => async (dispatch) => {
+    const updatedCartItemQuantity = {
+      updatedItem: item,
+      updatedQuantity: newQuantity,
+    };
+    const response = await fetch(`/api/shopping_carts/update/${item.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedCartItemQuantity)
+    });
+    if (response.ok) {
+      dispatch(updateCartItem(updatedCartItemQuantity));
+    } else {
+      console.error("Failed to update cart item quantity:", response.statusText);
+    }
 };
 
 // Thunk to remove an item from the cart
-export const removeFromCartThunk = (itemId) => async (dispatch) => {
-  // to make a DELETE request to your Flask API
-  // to remove the item from the shopping cart and dispatch the 'removeFromCart' action.
+export const removeFromCartThunk = (item) => async (dispatch) => {
+  const response = await fetch(`/api/shopping_carts/remove/${item.id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(item)
+  });
+
+  if (response.ok) {
+    dispatch(removeFromCart(item));
+  } else {
+    console.error("Failed to remove item from cart:", response.statusText);
+  }
 };
 
 // Thunk to clear the entire cart
 export const clearCartThunk = () => async (dispatch) => {
-  // to make a DELETE request to your Flask API
-  // to clear the entire shopping cart and dispatch the 'clearCart' action.
+  const response = await fetch("/api/shopping_carts/clear", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    dispatch(clearCart());
+  } else {
+    console.error("Failed to clear cart:", response.statusText);
+  }
 };
 
 //REDUCER
@@ -59,20 +104,85 @@ const initialState = {
 const shoppingCartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      // to add an item to the cart
-      return state;
+      const { item, quantity } = action.payload
+      // Check if the item is already in the cart
+      const existingCartItemIndex = state.cartItems.findIndex(
+        (cartItem) => cartItem.item.id === item.id
+      );
+      if (existingCartItem !== -1) {
+        // If the item is already in the cart, update its quantity
+        const updatedCartItems = [...state.cartItems];
+        updatedCartItems[existingCartItemIndex].quantity += quantity;
+
+        // Calculate the new cart total
+        const updatedCartTotal = updatedCartItems.reduce(
+          (total, cartItem) => total + cartItem.item.price * cartItem.quantity,
+          0
+        );
+
+        return {
+          ...state,
+          cartItems: updatedCartItems,
+          cartTotal: updatedCartTotal,
+        };
+      } else {
+        // If the item is not in the cart, add it
+        const newCartItem = {
+          item,
+          quantity,
+        };
+
+        // Calculate the new cart total
+        const updatedCartTotal =
+          state.cartTotal + item.price * quantity;
+
+        return {
+          ...state,
+          cartItems: [...state.cartItems, newCartItem],
+          cartTotal: updatedCartTotal,
+        };
+      }
 
     case UPDATE_CART_ITEM:
-      // to update the quantity of an item in the cart
-      return state;
+      const { updatedItem, updatedQuantity } = action.payload;
+      const updatedCartItems = state.cartItems.map((cartItem) => {
+        if (cartItem.item.id === updatedItem.id) {
+          // Update the quantity of the specified item
+          return {
+            item: updatedItem,
+            quantity: updatedQuantity,
+          };
+        }
+        return cartItem;
+      });
+      // Calculate the new cart total
+      const updatedCartTotal = updatedCartItems.reduce(
+        (total, cartItem) => total + cartItem.item.price * cartItem.quantity,
+        0
+      );
+      return {
+        ...state,
+        cartItems: updatedCartItems,
+        cartTotal: updatedCartTotal,
+      };
 
     case REMOVE_FROM_CART:
-      // to remove an item from the cart
-      return state;
+      const filteredCartItems = state.cartItems.filter(
+        (cartItem) => cartItem.item.id !== action.payload.item.id
+      );
+      // Calculate the new cart total
+      const updatedTotal = filteredCartItems.reduce(
+        (total, cartItem) => total + cartItem.item.price * cartItem.quantity,
+        0
+      );
+      return {
+        ...state,
+        cartItems: filteredCartItems,
+        cartTotal: updatedTotal,
+      };
 
     case CLEAR_CART:
-      // to clear the entire cart
-      return state;
+      return initialState;
 
     default:
       return state;
