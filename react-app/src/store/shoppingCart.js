@@ -3,6 +3,7 @@ export const ADD_TO_CART = 'cart/ADD_TO_CART'
 export const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM'
 export const REMOVE_FROM_CART = 'cart/REMOVE_FROM_CART'
 export const CLEAR_CART = 'cart/CLEAR_CART'
+export const GET_ALL_SHOPPING_CARTS = 'cart/GET_ALL_SHOPPING_CARTS'
 
 
 // ACTION CREATORS
@@ -25,7 +26,26 @@ export const clearCart = () => ({
   type: CLEAR_CART,
 });
 
+export const getAllShoppingCarts = (shoppingCarts) => ({
+  type: GET_ALL_SHOPPING_CARTS,
+  payload: shoppingCarts,
+});
+
 //THUNKS
+// Thunk to load all shopping carts
+export const getAllShoppingCartsThunk = () => async (dispatch) => {
+  const response = await fetch('/api/shopping_carts/all_carts');
+
+  if (response.ok) {
+    const data = await response.json();
+    // console.log(data)
+    dispatch(getAllShoppingCarts(data.ShoppingCarts));
+  } else {
+    console.error('Error loading shopping carts:', response.status, response.statusText);
+  }
+};
+
+
 // Thunk to add an item to the cart
 export const addToCartThunk = (item, quantity) => async (dispatch) => {
   const itemToAdd = { item, quantity }
@@ -99,6 +119,7 @@ export const clearCartThunk = () => async (dispatch) => {
 const initialState = {
   cartItems: [],
   cartTotal: 0,
+  allShoppingCarts: [], 
 };
 
 const shoppingCartReducer = (state = initialState, action) => {
@@ -183,6 +204,12 @@ const shoppingCartReducer = (state = initialState, action) => {
 
     case CLEAR_CART:
       return initialState;
+
+    case GET_ALL_SHOPPING_CARTS:
+      return {
+        ...state,
+        allShoppingCarts: action.payload,
+      };  
 
     default:
       return state;
