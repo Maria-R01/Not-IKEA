@@ -5,6 +5,7 @@ from ..forms import AddToCartForm
 
 shopping_cart_routes = Blueprint('shopping_carts', __name__)
 
+
 @shopping_cart_routes.route('/', methods=['GET'])
 @login_required
 def view_cart():
@@ -31,6 +32,21 @@ def view_cart():
     total_cart_subtotal = round(total_cart_subtotal, 2)
 
     return jsonify({"shoppingCart": cart_items, "cartSubtotal": total_cart_subtotal})
+
+@shopping_cart_routes.route('/all_carts', methods=['GET'])
+# @login_required
+def get_all_shopping_carts():
+    """
+    Retrieve All Shopping Carts:
+    This route retrieves all shopping carts and their details from the database and returns them as a JSON list.
+    """
+    shopping_carts = ShoppingCart.query.all()
+    shopping_carts_list = []
+    for cart in shopping_carts:
+        cart_dict = cart.to_dict()
+        shopping_carts_list.append(cart_dict)
+    # print(shopping_carts_list)
+    return jsonify({"ShoppingCarts": shopping_carts_list})
 
 
 @shopping_cart_routes.route('/add/<int:item_id>', methods=['POST'])
