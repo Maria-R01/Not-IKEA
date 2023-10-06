@@ -1,4 +1,4 @@
-import './NotLoggedInShoppingCart.css';
+import './NotLoggedinShoppingCart.css';
 
 const NotLoggedInShoppingCart = () => {
     
