@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllShoppingCartsThunk } from '../../store/shoppingCart';
 import { allItemsThunk } from '../../store/item';
+import NotLoggedInShoppingCart from '../NotLoggedInShoppingCart';
+import LoggedInShoppingCart from '../LoggedInShoppingCart';
 
 const ShoppingCart = () => {
     const dispatch = useDispatch();
@@ -21,9 +23,9 @@ const ShoppingCart = () => {
             <h1>Shopping Bag</h1>
         </div>
         {user === null ? (
-            <>NOT LOGGED IN</>
+            <NotLoggedInShoppingCart />
         ) : (
-            <>LOGGED IN</>
+            <LoggedInShoppingCart />
         )}
         <div className='item-in-cart'>
             <div className='item-image'>
