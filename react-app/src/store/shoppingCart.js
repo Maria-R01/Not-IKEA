@@ -27,9 +27,22 @@ export const clearCart = () => ({
 
 //THUNKS
 // Thunk to add an item to the cart
-export const addToCartThunk = (item) => async (dispatch) => {
+export const addToCartThunk = (item, quantity) => async (dispatch) => {
   // to make a POST request to your Flask API
   // to add the item to the shopping cart and dispatch the 'addToCart' action.
+  const itemToAdd = { item, quantity }
+  const response = await fetch(`/api/shopping_carts/add/${item.id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(itemToAdd),
+  });
+  if (response.ok) {
+    dispatch(addToCart(itemToAdd));
+  } else {
+    console.error('Error adding item to cart:', response.statusText);
+  }
 };
 
 // Thunk to update the quantity of an item in the cart
@@ -59,8 +72,44 @@ const initialState = {
 const shoppingCartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      // to add an item to the cart
-      return state;
+      // Check if the item is already in the cart
+      const { item, quantity } = action.payload
+      const existingCartItemIndex = state.cartItems.findIndex(
+        (cartItem) => cartItem.item.id === item.id
+      );
+      if (existingCartItem !== -1) {
+        // If the item is already in the cart, update its quantity
+        const updatedCartItems = [...state.cartItems];
+        updatedCartItems[existingCartItemIndex].quantity += quantity;
+
+        // Calculate the new cart total
+        const updatedCartTotal = updatedCartItems.reduce(
+          (total, cartItem) => total + cartItem.item.price * cartItem.quantity,
+          0
+        );
+
+        return {
+          ...state,
+          cartItems: updatedCartItems,
+          cartTotal: updatedCartTotal,
+        };
+      } else {
+        // If the item is not in the cart, add it
+        const newCartItem = {
+          item,
+          quantity,
+        };
+
+        // Calculate the new cart total
+        const updatedCartTotal =
+          state.cartTotal + item.price * quantity;
+
+        return {
+          ...state,
+          cartItems: [...state.cartItems, newCartItem],
+          cartTotal: updatedCartTotal,
+        };
+      }
 
     case UPDATE_CART_ITEM:
       // to update the quantity of an item in the cart
