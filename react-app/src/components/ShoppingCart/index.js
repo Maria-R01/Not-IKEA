@@ -1,12 +1,30 @@
 import './ShoppingCart.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getAllShoppingCartsThunk } from '../../store/shoppingCart';
+import { allItemsThunk } from '../../store/item';
 
 const ShoppingCart = () => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.session.user)
+    console.log(user)
+
+    useEffect(() => {
+        dispatch(getAllShoppingCartsThunk())
+        dispatch(allItemsThunk())
+    }, [dispatch])
+
     
     return (
         <>
         <div>
             <h1>Shopping Bag</h1>
         </div>
+        {user === null ? (
+            <>NOT LOGGED IN</>
+        ) : (
+            <>LOGGED IN</>
+        )}
         <div className='item-in-cart'>
             <div className='item-image'>
                 <img></img>
