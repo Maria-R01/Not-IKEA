@@ -33,6 +33,18 @@ def view_cart():
 
     return jsonify({"shoppingCart": cart_items, "cartSubtotal": total_cart_subtotal})
 
+@shopping_cart_routes.route('/cart_items')
+@login_required
+def get_cart_items():
+    """
+    Get User's Cart Items:
+    Retrieves the cart items for the currently logged-in user.
+    """
+    cart_items = ShoppingCart.query.filter_by(user_id=current_user.id).all()
+    cart_items_list = [item.to_dict() for item in cart_items] 
+    return jsonify({"cartItems": cart_items_list})
+
+
 @shopping_cart_routes.route('/all_carts', methods=['GET'])
 # @login_required
 def get_all_shopping_carts():
@@ -89,11 +101,18 @@ def update_item_quantity(item_id):
     Update Item Quantity in Shopping Cart:
     Updates the quantity of an item in the user's shopping cart.
     """
-    cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=item_id).first()
+    cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=ShoppingCart.id).first()
+    print('cartItem: ', cart_item)
+    item = Item.query.get(item_id)
+    print('item: ', item)
     if not cart_item:
         return jsonify({"message": "Item not found in cart"}), 404
+    
+    if not item:
+        return jsonify({"message": "Item not found"}), 404
 
-    new_quantity = request.json.get('quantity')
+    new_quantity = request.json.get('updatedQuantity')
+    print('new_quantity: ', new_quantity)
     if new_quantity is None or new_quantity <= 0:
         return jsonify({"message": "Invalid quantity"}), 400
     

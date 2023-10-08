@@ -21,6 +21,23 @@ function LoginFormModal() {
     }
   };
 
+
+  const demoUser = async () => {
+    // const demoUserCredential = 'bobbie@aa.io'
+    // const demoUserPassword = 'password'
+    // return await dispatch(login(demoUserCredential, demoUserPassword))
+    //   .then(closeModal)
+    //   .then(history.push('/'))
+    //   .catch(async (res) => {
+    //     const data = await res.json();
+    //     if(data && data.errors) {
+    //       setErrors(data.errors);
+    //     }
+    //   })
+    setEmail('demo@aa.io')
+    setPassword('password')
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -49,6 +66,9 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
+        <div className="demo-user">
+          <button onClick={demoUser} >Demo User</button>
+        </div>
       </form>
     </>
   );

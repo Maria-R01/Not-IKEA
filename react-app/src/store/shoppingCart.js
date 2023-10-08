@@ -4,9 +4,15 @@ export const UPDATE_CART_ITEM = 'cart/UPDATE_CART_ITEM'
 export const REMOVE_FROM_CART = 'cart/REMOVE_FROM_CART'
 export const CLEAR_CART = 'cart/CLEAR_CART'
 export const GET_ALL_SHOPPING_CARTS = 'cart/GET_ALL_SHOPPING_CARTS'
+export const GET_CART_ITEMS = 'cart/GET_CART_ITEMS'
 
 
 // ACTION CREATORS
+export const getCartItems = (cartItems) => ({
+  type: GET_CART_ITEMS,
+  payload: cartItems
+});
+
 export const addToCart = (itemToAdd) => ({
   type: ADD_TO_CART,
   payload: itemToAdd,
@@ -32,6 +38,18 @@ export const getAllShoppingCarts = (shoppingCarts) => ({
 });
 
 //THUNKS
+// Thunk to load cart items
+export const loadCartItemsThunk = () => async (dispatch) => {
+  const response = await fetch('/api/shopping_carts/cart_items');
+  if (response.ok) {
+    const data = await response.json();
+    // console.log('THUNK: ', data)
+    dispatch(getCartItems(data.cartItems)); 
+  } else {
+    console.error('Failed to load cart items:', response.statusText);
+  }
+};
+
 // Thunk to load all shopping carts
 export const getAllShoppingCartsThunk = () => async (dispatch) => {
   const response = await fetch('/api/shopping_carts/all_carts');
@@ -65,10 +83,12 @@ export const addToCartThunk = (item, quantity) => async (dispatch) => {
 
 // Thunk to update the quantity of an item in the cart
 export const updateCartItemThunk = (item, newQuantity) => async (dispatch) => {
+  // console.log('updateCartItemThunk called');
     const updatedCartItemQuantity = {
       updatedItem: item,
       updatedQuantity: newQuantity,
     };
+    // console.log('item thunk: ', item)
     const response = await fetch(`/api/shopping_carts/update/${item.id}`, {
       method: "PUT",
       headers: {
@@ -77,6 +97,7 @@ export const updateCartItemThunk = (item, newQuantity) => async (dispatch) => {
       body: JSON.stringify(updatedCartItemQuantity)
     });
     if (response.ok) {
+      console.log(response)
       dispatch(updateCartItem(updatedCartItemQuantity));
     } else {
       console.error("Failed to update cart item quantity:", response.statusText);
@@ -165,27 +186,40 @@ const shoppingCartReducer = (state = initialState, action) => {
       }
 
     case UPDATE_CART_ITEM:
-      const { updatedItem, updatedQuantity } = action.payload;
-      const updatedCartItems = state.cartItems.map((cartItem) => {
-        if (cartItem.item.id === updatedItem.id) {
-          // Update the quantity of the specified item
-          return {
-            item: updatedItem,
-            quantity: updatedQuantity,
-          };
-        }
-        return cartItem;
-      });
-      // Calculate the new cart total
-      const updatedCartTotal = updatedCartItems.reduce(
-        (total, cartItem) => total + cartItem.item.price * cartItem.quantity,
-        0
-      );
       return {
         ...state,
-        cartItems: updatedCartItems,
-        cartTotal: updatedCartTotal,
+        cartItems: state.cartItems?.map((cartItem) => {
+          if (cartItem.id === action.payload.updatedItem.id) {
+            // Update the quantity of the specific item
+            return {
+              ...cartItem,
+              quantity: action.payload.updatedQuantity,
+            };
+          }
+          return cartItem;
+        }),
       };
+      // const { updatedItem, updatedQuantity } = action.payload;
+      // const updatedCartItems = state.cartItems.map((cartItem) => {
+      //   if (cartItem.item.id === updatedItem.id) {
+      //     // Update the quantity of the specified item
+      //     return {
+      //       item: updatedItem,
+      //       quantity: updatedQuantity,
+      //     };
+      //   }
+      //   return cartItem;
+      // });
+      // // Calculate the new cart total
+      // const updatedCartTotal = updatedCartItems.reduce(
+      //   (total, cartItem) => total + cartItem.item.price * cartItem.quantity,
+      //   0
+      // );
+      // return {
+      //   ...state,
+      //   cartItems: updatedCartItems,
+      //   cartTotal: updatedCartTotal,
+      // };
 
     case REMOVE_FROM_CART:
       const filteredCartItems = state.cartItems.filter(
@@ -210,6 +244,12 @@ const shoppingCartReducer = (state = initialState, action) => {
         ...state,
         allShoppingCarts: action.payload,
       };  
+
+    case GET_CART_ITEMS:
+      return {
+        ...state,
+        cartItems: action.payload,
+      };
 
     default:
       return state;

@@ -1,7 +1,7 @@
 import './ShoppingCart.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getAllShoppingCartsThunk } from '../../store/shoppingCart';
+import { getAllShoppingCartsThunk, loadCartItemsThunk } from '../../store/shoppingCart';
 import { allItemsThunk } from '../../store/item';
 import NotLoggedInShoppingCart from '../NotLoggedInShoppingCart';
 import LoggedInShoppingCart from '../LoggedInShoppingCart';
@@ -9,11 +9,18 @@ import LoggedInShoppingCart from '../LoggedInShoppingCart';
 const ShoppingCart = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    console.log(user)
+    // console.log(user)
+    const items = useSelector(state => state.items.allItems)
+    // console.log(items)
+    const carts = useSelector(state => state.shoppingCart.allShoppingCarts)
+    // console.log(carts)
+    const cartItems = useSelector(state => state.shoppingCart.cartItems)
+    // console.log('cart items selector: ', cartItems)
 
     useEffect(() => {
         dispatch(getAllShoppingCartsThunk())
         dispatch(allItemsThunk())
+        dispatch(loadCartItemsThunk())
     }, [dispatch])
 
     
@@ -25,50 +32,8 @@ const ShoppingCart = () => {
         {user === null ? (
             <NotLoggedInShoppingCart />
         ) : (
-            <LoggedInShoppingCart />
+            <LoggedInShoppingCart user={user} items={items} carts={carts} cartItems={cartItems}/>
         )}
-        <div className='item-in-cart'>
-            <div className='item-image'>
-                <img></img>
-            </div>
-            <div className='item-details-container'>
-               <div className='top-half'>
-                <div className='item-details'>
-                        <div></div>
-                </div>
-                <div className='item-price'>
-                        <div></div>
-                </div>
-               </div>
-               <div className='bottom-half'>
-                <div className='update-delete-cart-item-container'>
-                    <div className='quantity'>
-                        <div></div>
-                    </div>
-                    <div className='removal'>
-                        <div></div>
-                    </div>
-                </div>
-               </div>
-            </div>
-        </div>
-        <div className='order-summary-container'>
-            <div className='order-summary'>
-                <div>
-                    Order Summary
-                </div>
-                <div className='subtotal'>
-                    Total (Excluding Taxes)
-                    <div>
-                        $
-                    </div>
-                </div>
-            </div>
-            <div className='checkout-button-container'>
-                <button>Continue To Checkout</button>
-            </div>
-        </div>
-        
         </>
     )
 
