@@ -102,9 +102,9 @@ def update_item_quantity(item_id):
     Updates the quantity of an item in the user's shopping cart.
     """
     cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=ShoppingCart.id).first()
-    print('cartItem: ', cart_item)
+    # print('cartItem: ', cart_item.quantity)
     item = Item.query.get(item_id)
-    print('item: ', item)
+    # print('item: ', item)
     if not cart_item:
         return jsonify({"message": "Item not found in cart"}), 404
     
@@ -112,7 +112,7 @@ def update_item_quantity(item_id):
         return jsonify({"message": "Item not found"}), 404
 
     new_quantity = request.json.get('updatedQuantity')
-    print('new_quantity: ', new_quantity)
+    # print('new_quantity: ', new_quantity)
     if new_quantity is None or new_quantity <= 0:
         return jsonify({"message": "Invalid quantity"}), 400
     
@@ -121,6 +121,7 @@ def update_item_quantity(item_id):
 
     cart_item.quantity = new_quantity
     db.session.commit()
+    # print('updated cart item: ', cart_item.quantity)
     return jsonify({"message": "Quantity updated successfully"})
 
 @shopping_cart_routes.route('/remove/<int:item_id>', methods=['DELETE'])
@@ -130,10 +131,10 @@ def remove_item_from_cart(item_id):
     Remove Item from Shopping Cart:
     Removes an item from the user's shopping cart.
     """
-    cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=item_id).first()
+    cart_item = ShoppingCart.query.get(item_id)
     if not cart_item:
         return jsonify({"message": "Item not found in cart"}), 404
-
+    print('cart being deleted: ', cart_item.id)
     db.session.delete(cart_item)
     db.session.commit()
     return jsonify({"message": "Item removed from cart successfully"})

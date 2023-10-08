@@ -2,18 +2,20 @@ import './CartItemTile.css';
 import { removeFromCartThunk, updateCartItemThunk } from '../../store/shoppingCart'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const CartItemTile = ({cartItem, items, cartItems }) => {
     // console.log('ITEMS: ',items)
     // console.log('cartItem: ', cartItem)
     const dispatch = useDispatch()
+    const history = useHistory()
     const currentCartItem = cartItems.findIndex(cartItem => cartItem.item_id === cartItem.id)
     // console.log(currentCartItem)
     const itemIndex = items.findIndex(item => cartItem.item_id === item.id)
     const cartItemsSelector = useSelector((state) => state.shoppingCart.cartItems);
     const itemForCartItem = items[itemIndex]
     const cartItemQuantity = cartItemsSelector?.filter(cartItem => cartItem.item_id === itemForCartItem.id)[0].quantity
-    // console.log('CARTITEMS: ', cartItemQuantity)
+    // console.log('CARTITEMS: ', cartItemQuantity) //line commented out when getting error
     // const imageUrl = itemForCartItem?.images[0]?.url;
 
 
@@ -30,9 +32,12 @@ const CartItemTile = ({cartItem, items, cartItems }) => {
         }
     };
 
-    const handleRemoveFromCart = () => {
-        dispatch(removeFromCartThunk(cartItem.id));
-      };
+    const handleRemoveFromCart = (e) => {
+        e.preventDefault();
+        if (itemForCartItem) {
+            dispatch(removeFromCartThunk(cartItem));
+        }
+    };
 
     return (
         <>
@@ -59,7 +64,7 @@ const CartItemTile = ({cartItem, items, cartItems }) => {
                     </div>
                 </div>
                 <div className='removal'>
-                    <button>Remove From Cart</button>
+                    <button onClick={handleRemoveFromCart}>Remove From Cart</button>
                 </div>
             </div>
         </div>
