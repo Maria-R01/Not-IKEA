@@ -11,8 +11,9 @@ const CartItemTile = ({cartItem, items, cartItems }) => {
     // console.log(currentCartItem)
     const itemIndex = items.findIndex(item => cartItem.item_id === item.id)
     const cartItemsSelector = useSelector((state) => state.shoppingCart.cartItems);
-    // console.log('CARTITEMS: ',cartItemsSelector)
     const itemForCartItem = items[itemIndex]
+    const cartItemQuantity = cartItemsSelector?.filter(cartItem => cartItem.item_id === itemForCartItem.id)[0].quantity
+    // console.log('CARTITEMS: ', cartItemQuantity)
     // const imageUrl = itemForCartItem?.images[0]?.url;
 
 
@@ -53,7 +54,7 @@ const CartItemTile = ({cartItem, items, cartItems }) => {
                 <div className='quantity'>
                     <div className='quantity-buttons-container'>
                         <button onClick={handleDecrement}>-</button>
-                        <div>Quantity in cart: {cartItem.quantity}</div>
+                        <div>Quantity in cart: {cartItemQuantity}</div>
                         <button onClick={handleIncrement}>+</button>
                     </div>
                 </div>
