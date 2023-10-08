@@ -13,8 +13,8 @@ const CartItemTile = ({cartItem, items, cartItems }) => {
     // console.log(currentCartItem)
     const itemIndex = items.findIndex(item => cartItem.item_id === item.id)
     const cartItemsSelector = useSelector((state) => state.shoppingCart.cartItems);
-    const itemForCartItem = items[itemIndex]
-    const cartItemQuantity = cartItemsSelector?.filter(cartItem => cartItem.item_id === itemForCartItem.id)[0].quantity
+    const itemForCartItem = items.find(item => cartItem.item_id === item.id);
+    const cartItemQuantity = itemForCartItem && cartItemsSelector?.filter(cartItem => cartItem.item_id === itemForCartItem.id)[0].quantity
     // console.log('CARTITEMS: ', cartItemQuantity) //line commented out when getting error
     // const imageUrl = itemForCartItem?.images[0]?.url;
 
