@@ -1,7 +1,7 @@
 import './ShoppingCart.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getAllShoppingCartsThunk } from '../../store/shoppingCart';
+import { getAllShoppingCartsThunk, loadCartItemsThunk } from '../../store/shoppingCart';
 import { allItemsThunk } from '../../store/item';
 import NotLoggedInShoppingCart from '../NotLoggedInShoppingCart';
 import LoggedInShoppingCart from '../LoggedInShoppingCart';
@@ -14,10 +14,13 @@ const ShoppingCart = () => {
     // console.log(items)
     const carts = useSelector(state => state.shoppingCart.allShoppingCarts)
     // console.log(carts)
+    const cartItems = useSelector(state => state.shoppingCart.cartItems)
+    // console.log('cart items selector: ', cartItems)
 
     useEffect(() => {
         dispatch(getAllShoppingCartsThunk())
         dispatch(allItemsThunk())
+        dispatch(loadCartItemsThunk())
     }, [dispatch])
 
     
@@ -29,7 +32,7 @@ const ShoppingCart = () => {
         {user === null ? (
             <NotLoggedInShoppingCart />
         ) : (
-            <LoggedInShoppingCart user={user} items={items} carts={carts}/>
+            <LoggedInShoppingCart user={user} items={items} carts={carts} cartItems={cartItems}/>
         )}
         </>
     )
