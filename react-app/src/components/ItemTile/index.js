@@ -7,7 +7,7 @@ const ItemTile = ({ item }) => {
                         <div>
                             Name: {item.item_name}
                         </div>
-                        <div>
+                        <div className='itemTile-image-container'>
                             <img src={item.images[0].url}></img>
                         </div>
                         <div>

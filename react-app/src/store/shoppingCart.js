@@ -43,7 +43,7 @@ export const loadCartItemsThunk = () => async (dispatch) => {
   const response = await fetch('/api/shopping_carts/cart_items');
   if (response.ok) {
     const data = await response.json();
-    // console.log('THUNK: ', data)
+    // console.log('THUNK: ', data.cartItems)
     dispatch(getCartItems(data.cartItems)); 
   } else {
     console.error('Failed to load cart items:', response.statusText);
@@ -222,12 +222,12 @@ const shoppingCartReducer = (state = initialState, action) => {
       // };
 
     case REMOVE_FROM_CART:
-      const filteredCartItems = state.cartItems.filter(
-        (cartItem) => cartItem.item.id !== action.payload.item.id
+      const filteredCartItems = state.cartItems?.filter(
+        (cartItem) => cartItem.id !== action.payload.id
       );
       // Calculate the new cart total
-      const updatedTotal = filteredCartItems.reduce(
-        (total, cartItem) => total + cartItem.item.price * cartItem.quantity,
+      const updatedTotal = filteredCartItems?.reduce(
+        (total, cartItem) => total + cartItem.price * cartItem.quantity,
         0
       );
       return {
