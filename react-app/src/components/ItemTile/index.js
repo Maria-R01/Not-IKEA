@@ -10,7 +10,7 @@ const ItemTile = ({ item }) => {
 
     const handleAddToCart = (e) => {
         e.preventDefault()
-        // dispatch(addToCartThunk(item, 1));
+        dispatch(addToCartThunk(item, 1));
     };
     return (
         <>
