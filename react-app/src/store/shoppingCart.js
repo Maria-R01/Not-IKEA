@@ -66,7 +66,7 @@ export const getAllShoppingCartsThunk = () => async (dispatch) => {
 
 // Thunk to add an item to the cart
 export const addToCartThunk = (item, quantity) => async (dispatch) => {
-  const itemToAdd = { item_id: item.id, quantity }
+  const itemToAdd = { item, item_id: item.id, quantity }
   console.log('item to add thunk: ', itemToAdd)
   const response = await fetch(`/api/shopping_carts/add/${item.id}`, {
     method: 'POST',
@@ -148,9 +148,10 @@ const shoppingCartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       const { item, quantity } = action.payload
+      // console.log('item in ADD_TO_CART reducer: ', item);
       // Check if the item is already in the cart
       const existingCartItemIndex = state.cartItems.findIndex(
-        (cartItem) => cartItem.item.id === item.id
+        (cartItem) => cartItem.id === item.id
       );
       if (existingCartItemIndex !== -1) {
         // If the item is already in the cart, update its quantity

@@ -2,6 +2,7 @@ import './IndividualItems.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { allItemsThunk } from '../../store/item'
+import { addToCartThunk } from '../../store/shoppingCart'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 const IndividualItems = () => {
@@ -9,10 +10,11 @@ const IndividualItems = () => {
     const itemIdNum = Number(itemId)
     const dispatch = useDispatch();
     const itemData = useSelector(state => state.items.allItems)
+    const user = useSelector(state => state.session.user)
     const item = itemData && itemData?.find(item => item.id === itemIdNum)
     console.log('individual item: ', item)
     const itemImagesArr = item && item.images
-    console.log("item images: ", itemImagesArr)
+    // console.log("item images: ", itemImagesArr)
     const itemsReviewsArr = item && item.reviews.sort(
         (a, b) => {
             const aTime = Date.parse(a.updatedAt);
@@ -22,6 +24,17 @@ const IndividualItems = () => {
       );
     console.log('item reviews: ', itemsReviewsArr)
 
+    const userReviewIndex = () => {
+        const reviewIndex = itemsReviewsArr &&  itemsReviewsArr?.findIndex(review => review.user_id === user.id)
+        return reviewIndex
+    }
+    // console.log('userReviewIndex : ', userReviewIndex())
+    const userReview = (index) => {
+        if(index === -1) return {}
+        return itemsReviewsArr[index]
+    }
+
+    console.log('userReview: ', userReview(userReviewIndex()))
     const formattedDate = (timeStamp) => {
         return new Date(timeStamp).toLocaleString("en-US", {
           month: "long",
@@ -29,7 +42,11 @@ const IndividualItems = () => {
           year: "numeric",
         });
     };
-
+    
+    const handleAddToCart = (e) => {
+        e.preventDefault()
+        dispatch(addToCartThunk(item, 1));
+    };
 
     useEffect(() => {
         dispatch(allItemsThunk())
@@ -40,48 +57,48 @@ const IndividualItems = () => {
         <>
             <div className='images-and-name-container'>
                 <div className='images-container'>
-                    {itemImagesArr.map(image => (
+                    {itemImagesArr?.map(image => (
                         <img className="item-image" src={image.url}></img>
                     ))}
                 </div>
                 <div className='name-price-avgRating'>
                         <div className='item-name'>
-                            {item.name}
+                            {item?.name}
                         </div>
                         <div className='item-price'>
-                            ${item.price}
+                            ${item?.price}
                         </div>
                         <div className='avgRating-stars'>
-                            Average Rating: {item.average_rating}
+                            Average Rating: {item?.average_rating}
                         </div>
                         <div className='amount-reviews'>
-                            ({item.review_count})
+                            ({item?.review_count})
                         </div>
                 </div>
                 <div className='add-to-cart-button-container'>
-                    <button className='add-cart-button'>
+                    <button className='add-cart-button' onClick={handleAddToCart}>
                         <i className="fa-solid fa-cart-plus fa-lg"></i>
                     </button>
                 </div>
                 <div className='description-container'>
                         <div className='description'>
-                            Item Description: {item.description}
+                            Item Description: {item?.description}
                         </div>
                 </div>
             </div>
             <div className='all-reviews-container'>
                 <div>Reviews:</div>
                 <div className='review-container'>
-                    {itemsReviewsArr.map(review => (
+                    {itemsReviewsArr?.map(review => (
                         <>  
                             <div className='review-date'>
-                                Review Date: {formattedDate(review.updated_at)}
+                                Review Date: {formattedDate(review?.updated_at)}
                             </div>
                             <div className='review-content'>
-                                {review.review}
+                                {review?.review}
                             </div>
                             <div>
-                                Stars Given: {review.stars}
+                                Stars Given: {review?.stars}
                             </div>
                         </>
                     ))}
