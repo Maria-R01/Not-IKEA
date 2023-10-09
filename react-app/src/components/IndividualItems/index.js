@@ -59,7 +59,9 @@ const IndividualItems = () => {
                         </div>
                 </div>
                 <div className='add-to-cart-button-container'>
-                    <button className='add-cart-button'>Add to cart</button>
+                    <button className='add-cart-button'>
+                        <i className="fa-solid fa-cart-plus fa-lg"></i>
+                    </button>
                 </div>
                 <div className='description-container'>
                         <div className='description'>

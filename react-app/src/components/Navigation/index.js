@@ -6,6 +6,9 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
+	const handleSearchSubmit = (e) => {
+		e.preventDefault();
+	};
 
 	return (
 		<div>
@@ -15,12 +18,24 @@ function Navigation({ isLoaded }){
 			<div>
 				<NavLink exact to="/home">Home</NavLink>
 			</div>
+			<form className="search-bar" onSubmit={handleSearchSubmit}>
+				<input type="text" placeholder="Search" />
+				<button type="submit">
+				<i className="fa-solid fa-search fa-lg"></i>
+				</button>
+			</form>
+			<div className="cart-icon">
+				<NavLink to="/cart">
+					<i className="fa-solid fa-cart-plus fa-lg"></i>
+				</NavLink>
+			</div>
 			{isLoaded && (
 				<div>
 					<ProfileButton user={sessionUser} />
 				</div>
 			)}
 		</div>
+		
 	);
 }
 

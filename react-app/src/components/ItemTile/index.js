@@ -1,9 +1,17 @@
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import './ItemTile.css';
+import { useDispatch } from 'react-redux';
+import { addToCartThunk } from '../../store/shoppingCart'
 
 
 const ItemTile = ({ item }) => {
     console.log('item in itemTile: ', item) //need to add avg rating and rating count
+    const dispatch = useDispatch();
+
+    const handleAddToCart = (e) => {
+        e.preventDefault()
+        // dispatch(addToCartThunk(item, 1));
+    };
     return (
         <>
             <NavLink to={`/item/${item.id}`}>
@@ -22,8 +30,8 @@ const ItemTile = ({ item }) => {
                             </div>
                 </div>
             </NavLink>
-            <button>
-                <img className='cart-icon' src='https://cdn3.iconfinder.com/data/icons/font-awesome-solid/576/cart-plus-512.png'></img>
+            <button onClick={handleAddToCart}>
+                <i className="fa-solid fa-cart-plus fa-lg"></i>
             </button>
         </>
     )
