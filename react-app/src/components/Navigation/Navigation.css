@@ -1,9 +1,12 @@
+@import url(https://db.onlinewebfonts.com/c/b269e509d0e2d442240b8df6035c9999?family=Noto+IKEA+Latin+Bold);
+
 body {
   display: flex;
   /* width: max-content; */
   /* border: 1px solid blue; */
   margin-left: 40px;
   margin-right: 40px;
+  font-family: "Noto IKEA Latin Bold";
 }
 .profile-dropdown {
   position: absolute;
@@ -44,7 +47,6 @@ body {
   border-radius: 50em;
   width: 670px;
   background-color: rgb(245,245,245);
-  
 }
 
 .search-bar >input {
@@ -56,6 +58,7 @@ body {
   padding-left: 15px;
   padding-top: 15px;
   padding-bottom: 15px;
+  font-family: "Noto IKEA Latin Bold";
 }
 
 .search-bar > button {
@@ -86,4 +89,22 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.profile-button-two {
+  background-color: white;
+  border: none;
+  text-decoration: none;
+}
+
+.cart-icon a:visited {
+  color: inherit; 
+}
+
+.home-container a:visited {
+  color: inherit;
+}
+
+.profile-button-two a:visited {
+  color: inherit;
 }

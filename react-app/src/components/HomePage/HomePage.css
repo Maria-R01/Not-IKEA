@@ -1,0 +1,12 @@
+.each-item-container {
+    text-decoration: none;
+}
+
+.all-items-parent-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: flex-start; */
+    gap: 30px;
+    justify-content: center;
+    color: black;
+  }
