@@ -37,7 +37,7 @@ const ItemTile = ({ item }) => {
                             </div>
                             <div className='price-rating-container'>
                                 <div className='item-price'>
-                                    ${item.price}
+                                    ${item.price.toFixed(2)}
                                 </div>
                                 <div className='ratings'>
                                     ★ {item.average_rating.toFixed(1)} ({item.review_count})
