@@ -5,7 +5,7 @@ import { addToCartThunk } from '../../store/shoppingCart'
 
 
 const ItemTile = ({ item }) => {
-    console.log('item in itemTile: ', item) //need to add avg rating and rating count
+    // console.log('item in itemTile: ', item) //need to add avg rating and rating count
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.session.user)
@@ -15,32 +15,37 @@ const ItemTile = ({ item }) => {
         e.preventDefault()
         dispatch(addToCartThunk(item, 1));
     };
+
     return (
-        <>
+        <div className='item-tile'>
             <NavLink to={`/item/${item.id}`}>
                 <div key={item.id}>
-                            <div>
-                                Name: {item.item_name}
-                            </div>
                             <div className='itemTile-image-container'>
                                 <img src={item.images[0].url}></img>
                             </div>
-                            <div>
-                                Price: ${item.price}
+                            <div className='top-half-container'>
+                                <div className='item-name'>
+                                    {item.item_name}
+                                </div>
+                                {loggedIn && (
+                                    <div className='add-cart-button'>
+                                        <button onClick={handleAddToCart}>
+                                            <i className="fa-solid fa-cart-plus fa-lg"></i>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
-                            <div>
-                                Average Rating: {item.average_rating} ({item.review_count})
+                            <div className='price-rating-container'>
+                                <div className='item-price'>
+                                    ${item.price}
+                                </div>
+                                <div className='ratings'>
+                                    ★ {item.average_rating.toFixed(1)} ({item.review_count})
+                                </div>
                             </div>
                 </div>
             </NavLink>
-            {loggedIn && (
-                <div>
-                    <button onClick={handleAddToCart}>
-                        <i className="fa-solid fa-cart-plus fa-lg"></i>
-                    </button>
-                </div>
-            )}
-        </>
+        </div>
     )
 
 }
