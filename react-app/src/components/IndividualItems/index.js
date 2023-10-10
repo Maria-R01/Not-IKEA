@@ -17,6 +17,8 @@ const IndividualItems = () => {
     const dispatch = useDispatch();
     const itemData = useSelector(state => state.items.allItems)
     const user = useSelector(state => state.session.user)
+    const loggedIn = user !== null
+    console.log('LOGGEDIN: ', loggedIn)
     const item = itemData && itemData?.find(item => item.id === itemIdNum)
     console.log('individual item: ', item)
     const itemImagesArr = item && item.images
@@ -82,11 +84,13 @@ const IndividualItems = () => {
                             ({item?.review_count})
                         </div>
                 </div>
-                <div className='add-to-cart-button-container'>
-                    <button className='add-cart-button' onClick={handleAddToCart}>
-                        <i className="fa-solid fa-cart-plus fa-lg"></i>
-                    </button>
-                </div>
+                {loggedIn && (
+                    <div className='add-to-cart-button-container'>
+                        <button className='add-cart-button' onClick={handleAddToCart}>
+                            <i className="fa-solid fa-cart-plus fa-lg"></i>
+                        </button>
+                    </div>
+                )}
                 <div className='description-container'>
                         <div className='description'>
                             Item Description: {item?.description}
@@ -96,7 +100,7 @@ const IndividualItems = () => {
             <div className='all-reviews-container'>
                 <div>Reviews:</div>
                 <div className='review-container'>
-                    {!userHasReview && (
+                    {!userHasReview && loggedIn && (
                         <OpenModalButton buttonText={`Add Review`} modalComponent={<AddReview userReview={userReview(userReviewIndex())} user_id={user?.id} item_id={itemIdNum}/>} />
                     )}
                     {itemsReviewsArr?.map(review => (
