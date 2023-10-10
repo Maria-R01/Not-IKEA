@@ -4,6 +4,10 @@ import { useEffect } from 'react';
 import { allItemsThunk } from '../../store/item'
 import { addToCartThunk } from '../../store/shoppingCart'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import AddReview from "../AddReview"
+import UpdateReview from "../UpdateReview"
+import DeleteReview from "../DeleteReview"
+import OpenModalButton from '../OpenModalButton';
 
 const IndividualItems = () => {
     const {itemId} = useParams()
@@ -31,9 +35,9 @@ const IndividualItems = () => {
     // console.log('userReviewIndex : ', userReviewIndex())
     const userReview = (index) => {
         if(index === -1) return {}
-        return itemsReviewsArr[index]
+        return itemsReviewsArr && itemsReviewsArr[index]
     }
-
+    const userHasReview = userReviewIndex() !== -1;
     console.log('userReview: ', userReview(userReviewIndex()))
     const formattedDate = (timeStamp) => {
         return new Date(timeStamp).toLocaleString("en-US", {
@@ -89,6 +93,9 @@ const IndividualItems = () => {
             <div className='all-reviews-container'>
                 <div>Reviews:</div>
                 <div className='review-container'>
+                    {!userHasReview && (
+                        <OpenModalButton buttonText={`Add Review`} modalComponent={<AddReview userReview={userReview(userReviewIndex())} />} />
+                    )}
                     {itemsReviewsArr?.map(review => (
                         <>  
                             <div className='review-date'>
@@ -100,6 +107,12 @@ const IndividualItems = () => {
                             <div>
                                 Stars Given: {review?.stars}
                             </div>
+                            {review.user_id === user.id && (
+                                <div>
+                                    <OpenModalButton buttonText={`Update Review`} modalComponent={<UpdateReview  />} />
+                                    <OpenModalButton buttonText={`Delete Review`} modalComponent={<DeleteReview  />} />
+                                </div>
+                            )}
                         </>
                     ))}
                 </div>
