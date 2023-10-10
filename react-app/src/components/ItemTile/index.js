@@ -5,7 +5,7 @@ import { addToCartThunk } from '../../store/shoppingCart'
 
 
 const ItemTile = ({ item }) => {
-    console.log('item in itemTile: ', item) //need to add avg rating and rating count
+    // console.log('item in itemTile: ', item) //need to add avg rating and rating count
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.session.user)
