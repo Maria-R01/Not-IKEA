@@ -101,7 +101,7 @@ const IndividualItems = () => {
                     )}
                     {itemsReviewsArr?.map(review => (
                         <>  
-                            <div className='review-date'>
+                            <div className='review-date' key={review.id}>
                                 Review Date: {formattedDate(review?.updated_at)}
                             </div>
                             <div className='review-content'>

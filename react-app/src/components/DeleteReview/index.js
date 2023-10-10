@@ -1,15 +1,16 @@
 import './DeleteReview.css';
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { deleteReviewThunk } from '../../store/review';
 
-function DeleteReview(){
+function DeleteReview({reviewId}){
 	const { closeModal } = useModal();
     const dispatch = useDispatch();
 
-
-	const handleDeleteReview = async (e, reviewId) => {
+	const handleDeleteReview = async (e) => {
         e.preventDefault();
-        // dispatch(deleteReviewThunk(reviewId));
+        await dispatch(deleteReviewThunk(reviewId));
+		return (closeModal())
     };
 
 	return (
