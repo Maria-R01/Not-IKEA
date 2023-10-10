@@ -31,7 +31,7 @@ const IndividualItems = () => {
     console.log('item reviews: ', itemsReviewsArr)
 
     const userReviewIndex = () => {
-        const reviewIndex = itemsReviewsArr &&  itemsReviewsArr?.findIndex(review => review.user_id === user.id)
+        const reviewIndex = itemsReviewsArr &&  itemsReviewsArr?.findIndex(review => review.user_id === user?.id)
         return reviewIndex
     }
     // console.log('userReviewIndex : ', userReviewIndex())
@@ -97,7 +97,7 @@ const IndividualItems = () => {
                 <div>Reviews:</div>
                 <div className='review-container'>
                     {!userHasReview && (
-                        <OpenModalButton buttonText={`Add Review`} modalComponent={<AddReview userReview={userReview(userReviewIndex())} user_id={user.id} item_id={itemIdNum}/>} />
+                        <OpenModalButton buttonText={`Add Review`} modalComponent={<AddReview userReview={userReview(userReviewIndex())} user_id={user?.id} item_id={itemIdNum}/>} />
                     )}
                     {itemsReviewsArr?.map(review => (
                         <>  
@@ -110,9 +110,9 @@ const IndividualItems = () => {
                             <div>
                                 Stars Given: {review?.stars}
                             </div>
-                            {review.user_id === user.id && (
+                            {review.user_id === user?.id && (
                                 <div>
-                                    <OpenModalButton buttonText={`Update Review`} modalComponent={<UpdateReview  reviewToEdit={review} item_id={itemIdNum} user_id={user.id}/>} />
+                                    <OpenModalButton buttonText={`Update Review`} modalComponent={<UpdateReview  reviewToEdit={review} item_id={itemIdNum} user_id={user?.id}/>} />
                                     <OpenModalButton buttonText={`Delete Review`} modalComponent={<DeleteReview  reviewId={review.id}/>} />
                                 </div>
                             )}
