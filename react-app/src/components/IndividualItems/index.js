@@ -4,6 +4,12 @@ import { useEffect } from 'react';
 import { allItemsThunk } from '../../store/item'
 import { addToCartThunk } from '../../store/shoppingCart'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import AddReview from "../AddReview"
+import UpdateReview from "../UpdateReview"
+import DeleteReview from "../DeleteReview"
+import OpenModalButton from '../OpenModalButton';
+import { fetchAllReviewsThunk } from '../../store/review';
+
 
 const IndividualItems = () => {
     const {itemId} = useParams()
@@ -31,9 +37,9 @@ const IndividualItems = () => {
     // console.log('userReviewIndex : ', userReviewIndex())
     const userReview = (index) => {
         if(index === -1) return {}
-        return itemsReviewsArr[index]
+        return itemsReviewsArr && itemsReviewsArr[index]
     }
-
+    const userHasReview = userReviewIndex() !== -1;
     console.log('userReview: ', userReview(userReviewIndex()))
     const formattedDate = (timeStamp) => {
         return new Date(timeStamp).toLocaleString("en-US", {
@@ -50,6 +56,7 @@ const IndividualItems = () => {
 
     useEffect(() => {
         dispatch(allItemsThunk())
+        dispatch(fetchAllReviewsThunk())
     }, [dispatch])
 
     
@@ -58,7 +65,7 @@ const IndividualItems = () => {
             <div className='images-and-name-container'>
                 <div className='images-container'>
                     {itemImagesArr?.map(image => (
-                        <img className="item-image" src={image.url}></img>
+                        <img className="item-image" src={image.url} key={image.id}></img>
                     ))}
                 </div>
                 <div className='name-price-avgRating'>
@@ -89,9 +96,12 @@ const IndividualItems = () => {
             <div className='all-reviews-container'>
                 <div>Reviews:</div>
                 <div className='review-container'>
+                    {!userHasReview && (
+                        <OpenModalButton buttonText={`Add Review`} modalComponent={<AddReview userReview={userReview(userReviewIndex())} user_id={user.id} item_id={itemIdNum}/>} />
+                    )}
                     {itemsReviewsArr?.map(review => (
                         <>  
-                            <div className='review-date'>
+                            <div className='review-date' key={review.id}>
                                 Review Date: {formattedDate(review?.updated_at)}
                             </div>
                             <div className='review-content'>
@@ -100,6 +110,12 @@ const IndividualItems = () => {
                             <div>
                                 Stars Given: {review?.stars}
                             </div>
+                            {review.user_id === user.id && (
+                                <div>
+                                    <OpenModalButton buttonText={`Update Review`} modalComponent={<UpdateReview  reviewToEdit={review} item_id={itemIdNum} user_id={user.id}/>} />
+                                    <OpenModalButton buttonText={`Delete Review`} modalComponent={<DeleteReview  reviewId={review.id}/>} />
+                                </div>
+                            )}
                         </>
                     ))}
                 </div>

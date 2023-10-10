@@ -112,6 +112,10 @@ def update_existing_review(id):
     review = Review.query.get(id)
     if not review:
         return jsonify({"message": "Review not found"}), 404
+    
+    # print('---------------------')
+    # print('REVIEW USERID: ', review.user_id)
+    # print('---------------------')
 
     if review.user_id != current_user.id:
         return jsonify({"message": "You are not authorized to update this review"}), 403
@@ -119,8 +123,13 @@ def update_existing_review(id):
     review.review = review_text
     review.stars = stars
 
+    # print('---------------------')
+    # print('REVIEW UPDATED: ', review.to_dict())
+    # print('---------------------')
+
     db.session.commit()
-    return jsonify({"message": "Review updated successfully", "review": review})
+    
+    return jsonify({"message": "Review updated successfully", "review": review.to_dict()})
 
 
 @review_routes.route('/<int:id>/delete', methods=['DELETE'])
