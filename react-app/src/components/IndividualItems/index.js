@@ -23,8 +23,8 @@ const IndividualItems = () => {
     // console.log("item images: ", itemImagesArr)
     const itemsReviewsArr = item && item.reviews.sort(
         (a, b) => {
-            const aTime = Date.parse(a.updatedAt);
-            const bTime = Date.parse(b.updatedAt);
+            const aTime = Date.parse(a.updated_at);
+            const bTime = Date.parse(b.updated_at);
             return bTime - aTime
         }
       );
