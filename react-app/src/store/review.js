@@ -110,7 +110,7 @@ export const updateReviewThunk = (reviewData) => async (dispatch) => {
 
 // Thunk to delete a review
 export const deleteReviewThunk = (reviewId) => async (dispatch) => {
-  console.log('REVIEW ID BEING PASSED INTO DELETE REVIEW THUNK: ', typeof reviewId, reviewId)
+  // console.log('REVIEW ID BEING PASSED INTO DELETE REVIEW THUNK: ', typeof reviewId, reviewId)
   const response = await fetch(`/api/item_reviews/${reviewId}/delete`, {
     method: "DELETE",
   });

@@ -1,14 +1,17 @@
 import './AddReview.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addReviewThunk, updateReviewThunk } from '../../store/review';
 import StarRating from '../StarRating'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 function AddReview({user_id, item_id, reviewToEdit}){
 	// console.log('user_id, item_id in add item: ', user_id, item_id)
 	console.log('EDITING REVIEW: ', reviewToEdit)
+	const history = useHistory()
+	const allReviews = useSelector((state) => state.reviews.allReviews);
 	const dispatch = useDispatch()
 	const { closeModal } = useModal()
 	const isThisAnEdit = reviewToEdit && Object.keys(reviewToEdit).length > 0
@@ -51,10 +54,9 @@ function AddReview({user_id, item_id, reviewToEdit}){
             newReview.id = reviewToEdit.id
             await dispatch(updateReviewThunk(newReview))
         }
-        // history.push('/')
+        // history.push(`/item/${item_id}`)
         return (closeModal())
     };
-
 
 	const submitButton = "review-submit-button" + (isDisabled() ? ' disabled' : '')
 	return (

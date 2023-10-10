@@ -65,7 +65,7 @@ const IndividualItems = () => {
             <div className='images-and-name-container'>
                 <div className='images-container'>
                     {itemImagesArr?.map(image => (
-                        <img className="item-image" src={image.url}></img>
+                        <img className="item-image" src={image.url} key={image.id}></img>
                     ))}
                 </div>
                 <div className='name-price-avgRating'>
