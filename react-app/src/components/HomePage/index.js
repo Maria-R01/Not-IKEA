@@ -17,7 +17,7 @@ const HomePage = () => {
         <>
             <div className='all-items-parent-container'>
                 {itemData.map(item => (
-                    <ItemTile item={item} key={item.id}/>
+                    <ItemTile item={item} key={item.id} className="each-item-container"/>
                 ))}
             </div>
         </>
