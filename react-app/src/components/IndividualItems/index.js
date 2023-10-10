@@ -8,6 +8,8 @@ import AddReview from "../AddReview"
 import UpdateReview from "../UpdateReview"
 import DeleteReview from "../DeleteReview"
 import OpenModalButton from '../OpenModalButton';
+import { fetchAllReviewsThunk } from '../../store/review';
+
 
 const IndividualItems = () => {
     const {itemId} = useParams()
@@ -54,6 +56,7 @@ const IndividualItems = () => {
 
     useEffect(() => {
         dispatch(allItemsThunk())
+        dispatch(fetchAllReviewsThunk())
     }, [dispatch])
 
     
@@ -94,7 +97,7 @@ const IndividualItems = () => {
                 <div>Reviews:</div>
                 <div className='review-container'>
                     {!userHasReview && (
-                        <OpenModalButton buttonText={`Add Review`} modalComponent={<AddReview userReview={userReview(userReviewIndex())} />} />
+                        <OpenModalButton buttonText={`Add Review`} modalComponent={<AddReview userReview={userReview(userReviewIndex())} user_id={user.id} item_id={itemIdNum}/>} />
                     )}
                     {itemsReviewsArr?.map(review => (
                         <>  
@@ -109,8 +112,8 @@ const IndividualItems = () => {
                             </div>
                             {review.user_id === user.id && (
                                 <div>
-                                    <OpenModalButton buttonText={`Update Review`} modalComponent={<UpdateReview  />} />
-                                    <OpenModalButton buttonText={`Delete Review`} modalComponent={<DeleteReview  />} />
+                                    <OpenModalButton buttonText={`Update Review`} modalComponent={<UpdateReview  reviewToEdit={review} item_id={itemIdNum} user_id={user.id}/>} />
+                                    <OpenModalButton buttonText={`Delete Review`} modalComponent={<DeleteReview  reviewId={review.id}/>} />
                                 </div>
                             )}
                         </>
