@@ -73,6 +73,7 @@ export const fetchUserReviewsThunk = (userId) => async (dispatch) => {
 
 // Thunk to add a new review
 export const addReviewThunk = (review) => async (dispatch) => {
+  // console.log('REVIEW IN THUNK FOR ADDING REVIEW: ', review)
   const response = await fetch("/api/item_reviews/new_review", {
     method: "POST",
     headers: {
@@ -90,18 +91,17 @@ export const addReviewThunk = (review) => async (dispatch) => {
 
 // Thunk to update an existing review
 export const updateReviewThunk = (reviewData) => async (dispatch) => {
+  // console.log('DATA BEING PASSED INTO UPDATE REVIEW THUNK: ',reviewData)
   const response = await fetch(`/api/item_reviews/${reviewData.id}/update`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      review: reviewData.review,
-      stars: reviewData.stars,
-    }),
+    body: JSON.stringify(reviewData),
   });
   if (response.ok) {
     const { review: updatedReview } = await response.json();
+    // console.log("UPDATE REVIEW RESPONSE: ", updateReview)
     dispatch(updateReview(updatedReview));
   } else {
     console.error(`Error updating review ${reviewData.id}.`);
@@ -110,6 +110,7 @@ export const updateReviewThunk = (reviewData) => async (dispatch) => {
 
 // Thunk to delete a review
 export const deleteReviewThunk = (reviewId) => async (dispatch) => {
+  // console.log('REVIEW ID BEING PASSED INTO DELETE REVIEW THUNK: ', typeof reviewId, reviewId)
   const response = await fetch(`/api/item_reviews/${reviewId}/delete`, {
     method: "DELETE",
   });
