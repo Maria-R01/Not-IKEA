@@ -21,7 +21,7 @@ function DeleteReview({reviewId}){
                 <h2>Confirm Delete</h2>
             </div>
             <div className="deleteReviewQuestionContainer">
-                <div>
+                <div className='deleteReviewQuestion'>
                     Are you sure you want to delete this review? 
                 </div>
             </div>

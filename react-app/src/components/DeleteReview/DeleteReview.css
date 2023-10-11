@@ -11,14 +11,41 @@
 }
 
 .deleteReviewContainer {
-    /* border: 2px dashed pink; */
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
+    padding: 20px;
+    width: 320px;
+}
+
+.ConfirmDeleteHeading > h2 {
+    display: flex;
+    justify-content: center;
 }
 
 .ConfirmDeleteHeading > * {
     margin-top: 0px;
     margin-bottom: 5px;
+}
+
+.deleteReviewQuestion {
+    display: flex;
+    justify-content: center;
+    font-size: small;
+}
+
+.deleteReviewButtonsContainer > button {
+    width: 300px;
+    background-color: rgb(0,89,163);
+    color: white;
+    border-radius: 50em;
+    height: 40px;
+    padding: 10px;
+    border: none;
+}
+
+.deleteReviewButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
 }

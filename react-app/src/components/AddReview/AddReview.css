@@ -23,3 +23,36 @@
 .review-input-container > textarea {
     padding: 10px;
 }
+
+.stars-input-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.submit-review-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.submit-review-button > button {
+    background-color: rgb(0,89,163);
+    color: white;
+    border-radius: 50em;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    /* width: 80px; */
+}
+
+button:disabled{
+    background-color: rgb(168, 168, 168);
+    color: white;
+    border-radius: 50em;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    /* width: 80px; */
+}
