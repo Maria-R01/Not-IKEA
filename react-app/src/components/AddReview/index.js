@@ -75,9 +75,10 @@ function AddReview({user_id, item_id, reviewToEdit}){
                 /> 
             </div>
             <div className="stars-input-container">
-                <StarRating starsRating={stars} starInputClick={starInputClick} className="starRating-input"/> Stars
+            Stars:
+                <StarRating starsRating={stars} starInputClick={starInputClick} className="starRating-input"/>
             </div>
-            <div>
+            <div className='submit-review-button'>
                 <button className={submitButton} onClick={handleSubmit} disabled={isDisabled()} >Submit Your Review</button>
             </div>
         </div>

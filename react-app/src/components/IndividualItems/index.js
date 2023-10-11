@@ -1,14 +1,14 @@
 import "./IndividualItems.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { allItemsThunk } from "../../store/item";
+import { allItemsThunk, fetchItemByIdThunk } from "../../store/item";
 import { addToCartThunk } from "../../store/shoppingCart";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import AddReview from "../AddReview";
 import UpdateReview from "../UpdateReview";
 import DeleteReview from "../DeleteReview";
 import OpenModalButton from "../OpenModalButton";
-import { fetchAllReviewsThunk } from "../../store/review";
+import { fetchAllReviewsThunk, fetchItemReviewsThunk, fetchUserReviewsThunk } from "../../store/review";
 
 const IndividualItems = () => {
   const { itemId } = useParams();
@@ -16,6 +16,9 @@ const IndividualItems = () => {
   const dispatch = useDispatch();
   const itemData = useSelector((state) => state.items.allItems);
   const user = useSelector((state) => state.session.user);
+  const allReviewForItem = useSelector((state) => state.reviews.itemReviews)
+  const allReviewsForUser = useSelector(state => state.reviews.userReviews)
+  const itemSelector = useSelector(state => state.items.item.reviews)
   const loggedIn = user !== null;
   console.log("LOGGEDIN: ", loggedIn);
   const item = itemData && itemData?.find((item) => item.id === itemIdNum);
@@ -62,7 +65,9 @@ const IndividualItems = () => {
   useEffect(() => {
     dispatch(allItemsThunk());
     dispatch(fetchAllReviewsThunk());
-  }, [dispatch]);
+    dispatch(fetchUserReviewsThunk(user?.id))
+    dispatch(fetchItemByIdThunk(itemIdNum))
+    }, [dispatch]);
 
   return (
     <div className="individual-item-container">
@@ -81,7 +86,7 @@ const IndividualItems = () => {
       <div className="right-side-container">
         <div className="name-price-avgRating">
           <div className="item-name">{item?.item_name}</div>
-          <div className="item-price">${formattedPrice}</div>
+          <div className="item-price">${item?.price}</div>
           <div className="stars-reviews-container">
             <div className="avgRating-stars">
                 ★ {item?.average_rating.toFixed(1)}
