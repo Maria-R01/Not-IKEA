@@ -1,0 +1,25 @@
+.review-modal {
+    /* border: 1px red dashed; */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 300px;
+    /* justify-content: center; */
+}
+
+.review-modal > div > h2 {
+    display: flex;
+    justify-content: center;
+    /* margin-bottom: -10px; */
+    /* margin-top: 0px; */
+}
+
+.review-input-container {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.review-input-container > textarea {
+    padding: 10px;
+}

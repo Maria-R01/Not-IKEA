@@ -31,6 +31,8 @@ const IndividualItems = () => {
     });
   console.log("item reviews: ", itemsReviewsArr);
 
+  const formattedPrice = item?.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
   const userReviewIndex = () => {
     const reviewIndex =
       itemsReviewsArr &&
@@ -79,7 +81,7 @@ const IndividualItems = () => {
       <div className="right-side-container">
         <div className="name-price-avgRating">
           <div className="item-name">{item?.item_name}</div>
-          <div className="item-price">${item?.price}</div>
+          <div className="item-price">${formattedPrice}</div>
           <div className="stars-reviews-container">
             <div className="avgRating-stars">
                 ★ {item?.average_rating.toFixed(1)}

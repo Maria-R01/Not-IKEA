@@ -62,9 +62,9 @@ function AddReview({user_id, item_id, reviewToEdit}){
 	return (
 		<div className="review-modal">
             <div>
-                <h2>HEADING NEED TO CHANGE</h2>
+                <h2>Product Review</h2>
             </div>
-            <div>
+            <div className='review-input-container'>
                 <textarea 
                 value={review}
                 onChange={e => setReview(e.target.value)}
