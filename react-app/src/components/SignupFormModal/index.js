@@ -13,8 +13,20 @@ function SignupFormModal() {
 	const [errors, setErrors] = useState([]);
 	const { closeModal } = useModal();
 
+	const validEmail = (email) => {
+		const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+		return emailRegex.test(email);
+	};
+
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (!validEmail(email)) {
+			setErrors([
+			"Please enter a valid email address."
+			]);
+			return;
+		}
 		if (password === confirmPassword) {
 			const data = await dispatch(signUp(username, email, password));
 			if (data) {
@@ -30,16 +42,16 @@ function SignupFormModal() {
 	};
 
 	return (
-		<>
+		<div className="signup-modal">
 			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
-				<ul>
+			<form onSubmit={handleSubmit} className="signup-form">
+				<div className="errors">
 					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
+						<div key={idx}>{error}</div>
 					))}
-				</ul>
+				</div>
 				<label>
-					Email
+					Email:
 					<input
 						type="text"
 						value={email}
@@ -48,7 +60,7 @@ function SignupFormModal() {
 					/>
 				</label>
 				<label>
-					Username
+					Username:
 					<input
 						type="text"
 						value={username}
@@ -57,7 +69,7 @@ function SignupFormModal() {
 					/>
 				</label>
 				<label>
-					Password
+					Password:
 					<input
 						type="password"
 						value={password}
@@ -66,7 +78,7 @@ function SignupFormModal() {
 					/>
 				</label>
 				<label>
-					Confirm Password
+					Confirm Password:
 					<input
 						type="password"
 						value={confirmPassword}
@@ -76,7 +88,7 @@ function SignupFormModal() {
 				</label>
 				<button type="submit">Sign Up</button>
 			</form>
-		</>
+		</div>
 	);
 }
 
