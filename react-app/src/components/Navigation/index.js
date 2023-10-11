@@ -12,7 +12,7 @@ function Navigation({ isLoaded }){
 
 	return (
 		<div className='nav-bar-container'>
-			<NavLink className='logo-container' exact to="/home">
+			<NavLink className='logo-container' exact to="/">
 				<img className='logo' src='https://substackcdn.com/image/fetch/w_848,c_limit,f_webp,q_auto:best,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fd37204f6-f104-4dd0-9969-f63464023cde_600x600.png'></img>
 			</NavLink>
 			<form className="search-bar" onSubmit={handleSearchSubmit}>

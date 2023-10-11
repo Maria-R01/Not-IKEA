@@ -9,15 +9,12 @@ const LoggedInShoppingCart = ({user, items, carts, cartItems}) => {
         {cartItems.length === 0 ? (
             <EmptyCart />
         ) : (
-            <>
+            <div className='cart-items-container'>
             {cartItems.map(cartItem => (
                 <CartItemTile cartItem={cartItem} items={items} cartItems={cartItems} key={cartItem.id}/>
             ))}
-            </>
+            </div>
         )}
-        <div>
-            <div>LOGGED IN SHOPPING CART COMPONENT</div>
-        </div>
         </>
     )
 

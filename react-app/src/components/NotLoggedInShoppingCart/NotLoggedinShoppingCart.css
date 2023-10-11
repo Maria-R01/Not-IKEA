@@ -1,0 +1,8 @@
+.not-loggedin-container > button {
+    border-radius: 50em;
+    padding: 6px;
+    border: none;
+    background-color: rgb(0,89,163);
+    color: white;
+    margin-top: 5px;
+}
