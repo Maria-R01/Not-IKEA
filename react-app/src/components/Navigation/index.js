@@ -17,7 +17,7 @@ function Navigation({ isLoaded }){
 			</NavLink>
 			<form className="search-bar" onSubmit={handleSearchSubmit}>
 				<input type="text" placeholder="What are you looking for?" />
-				<button type="submit">
+				<button type="submit" onClick={() => window.alert('Feature Coming Soon...')}>
 				<i className="fa-solid fa-search fa-lg"></i>
 				</button>
 			</form>
