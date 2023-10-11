@@ -59,6 +59,7 @@ body {
   padding-top: 15px;
   padding-bottom: 15px;
   font-family: "Noto IKEA Latin Bold";
+  outline: none;
 }
 
 .search-bar > button {
