@@ -10,6 +10,15 @@ body {
 }
 .profile-dropdown {
   position: absolute;
+  margin-top: 28px;
+  margin-left: 59px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background-color: rgb(0,89,163);
+  color: white;
+  padding: 7px;
+
 }
 
 .hidden {
@@ -108,4 +117,22 @@ body {
 
 .profile-button-two a:visited {
   color: inherit;
+}
+
+.profile-dropdown > button{
+  border-radius: 50em;
+  padding: 6px;
+  border: none;
+  background-color: white;
+  color: rgb(0,89,163);
+  margin-top: 5px;
+}
+
+.logout-button{
+  border-radius: 50em;
+  padding: 6px;
+  border: none;
+  background-color: white;
+  color: rgb(0,89,163);
+  margin-top: 5px;
 }

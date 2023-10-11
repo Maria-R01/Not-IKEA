@@ -1,20 +1,35 @@
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import './NotLoggedinShoppingCart.css';
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import "./NotLoggedinShoppingCart.css";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
 
 const NotLoggedInShoppingCart = () => {
-    
-    return (
-        <>
-        <div>
-            <div>Please
-                <Link to='/login'> log in </Link>
-                or
-                <Link to='/signup'> sign up </Link>
-                 to view/add items into your shopping bag.</div>
+  return (
+    <>
+      <div>
+        <div className="not-loggedin-container">
+          Please
+          <span> </span>
+          <OpenModalButton
+            buttonText="Log In"
+            // onItemClick={closeMenu}
+            modalComponent={<LoginFormModal />}
+          />
+          <span> </span>
+          or
+          <span> </span>
+          <OpenModalButton
+            buttonText="Sign Up"
+            // onItemClick={closeMenu}
+            modalComponent={<SignupFormModal />}
+          />
+          <span> </span>
+          to add/view items in your shopping bag.
         </div>
-        </>
-    )
-
-}
+      </div>
+    </>
+  );
+};
 
 export default NotLoggedInShoppingCart;

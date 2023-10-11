@@ -40,7 +40,7 @@ const CartItemTile = ({cartItem, items, cartItems }) => {
     };
 
     return (
-        <>
+        <div className='cart-item-tile'>
         <div className='item-in-cart'>
         <div className='item-image'>
             <img src={itemForCartItem?.images[0].url}></img>
@@ -59,18 +59,18 @@ const CartItemTile = ({cartItem, items, cartItems }) => {
                 <div className='quantity'>
                     <div className='quantity-buttons-container'>
                         <button onClick={handleDecrement}>-</button>
-                        <div>Quantity in cart: {cartItemQuantity}</div>
+                        <div> {cartItemQuantity} </div>
                         <button onClick={handleIncrement}>+</button>
                     </div>
                 </div>
                 <div className='removal'>
-                    <button onClick={handleRemoveFromCart}>Remove From Cart</button>
+                    <button onClick={handleRemoveFromCart}>Remove</button>
                 </div>
             </div>
         </div>
         </div>
     </div>
-    </>
+    </div>
     )
 
 }
