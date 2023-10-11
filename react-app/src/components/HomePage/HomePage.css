@@ -9,4 +9,6 @@
     gap: 30px;
     justify-content: center;
     color: black;
+    max-width: 1014px;
+    min-width: 1013px;
   }

@@ -55,11 +55,11 @@
     /* text-align: center; */
     font-weight: bold;
     margin-top: 10px;
-    /* font-size: larger; */
+    font-size: large;
 }
 
 .item-price {
-    /* font-size: large; */
+    font-size: large;
 }
 
 .price-rating-container {
