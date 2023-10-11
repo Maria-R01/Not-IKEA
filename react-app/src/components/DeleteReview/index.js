@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { deleteReviewThunk } from '../../store/review';
 
-function DeleteReview({reviewId}){
+function DeleteReview({reviewId, setReRenderParent, reRenderParent}){
 	const { closeModal } = useModal();
     const dispatch = useDispatch();
 	const allReviews = useSelector((state) => state.reviews.allReviews);
 
-
 	const handleDeleteReview = async (e) => {
         e.preventDefault();
         await dispatch(deleteReviewThunk(reviewId));
+        setReRenderParent(!reRenderParent)
 		return (closeModal())
     };
 
