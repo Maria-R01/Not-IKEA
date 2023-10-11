@@ -1,6 +1,6 @@
 import "./IndividualItems.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { allItemsThunk, fetchItemByIdThunk } from "../../store/item";
 import { addToCartThunk } from "../../store/shoppingCart";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
@@ -62,12 +62,13 @@ const IndividualItems = () => {
     dispatch(addToCartThunk(item, 1));
   };
 
+  const [reRenderParent, setReRenderParent]= useState(false)
   useEffect(() => {
     dispatch(allItemsThunk());
     dispatch(fetchAllReviewsThunk());
     dispatch(fetchUserReviewsThunk(user?.id))
     dispatch(fetchItemByIdThunk(itemIdNum))
-    }, [dispatch]);
+    }, [dispatch, reRenderParent]);
 
   return (
     <div className="individual-item-container">
@@ -112,6 +113,8 @@ const IndividualItems = () => {
                     userReview={userReview(userReviewIndex())}
                     user_id={user?.id}
                     item_id={itemIdNum}
+                    setReRenderParent={setReRenderParent}
+                    reRenderParent={reRenderParent}
                   />
                 }
               />
@@ -135,12 +138,14 @@ const IndividualItems = () => {
                           reviewToEdit={review}
                           item_id={itemIdNum}
                           user_id={user?.id}
+                          setReRenderParent={setReRenderParent}
+                          reRenderParent={reRenderParent}
                         />
                       }
                     />
                     <OpenModalButton
                       buttonText={`Delete Review`}
-                      modalComponent={<DeleteReview reviewId={review.id} />}
+                      modalComponent={<DeleteReview reviewId={review.id} 	setReRenderParent={setReRenderParent} reRenderParent={reRenderParent}/>}
                     />
                   </div>
                 )}

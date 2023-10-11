@@ -1,5 +1,5 @@
 .signup-modal {
-    border: 1px blue dashed;
+    /* border: 1px blue dashed; */
     display: flex;
     flex-direction: column;
     padding: 10px;

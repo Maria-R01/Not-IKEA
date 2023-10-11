@@ -7,7 +7,7 @@ import StarRating from '../StarRating'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
-function AddReview({user_id, item_id, reviewToEdit}){
+function AddReview({user_id, item_id, reviewToEdit, setReRenderParent, reRenderParent}){
 	// console.log('user_id, item_id in add item: ', user_id, item_id)
 	console.log('EDITING REVIEW: ', reviewToEdit)
 	const history = useHistory()
@@ -55,6 +55,7 @@ function AddReview({user_id, item_id, reviewToEdit}){
             await dispatch(updateReviewThunk(newReview))
         }
         // history.push(`/item/${item_id}`)
+        setReRenderParent(!reRenderParent)
         return (closeModal())
     };
 
