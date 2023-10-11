@@ -1,0 +1,58 @@
+.login-modal {
+    /* border: 1px red dashed; */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 300px;
+    /* justify-content: center; */
+}
+
+.login-modal > h1 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: -10px;
+    margin-top: -5px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+.login-form > label > input {
+    display: flex;
+    gap: 2px;
+    width: 292px;
+}
+
+.login-form > label {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.login-form > button {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 50em;
+    color: white;
+    background-color: rgb(0,89,163);
+    border: none;
+    height: 30px;
+}
+
+.errors {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: red;
+}
+
+.errors {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: red;
+}

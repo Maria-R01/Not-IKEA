@@ -42,16 +42,16 @@ function LoginFormModal() {
   }
 
   return (
-    <>
+    <div className="login-modal">
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
+      <form onSubmit={handleSubmit} className="login-form">
+        <div className="errors">
           {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
+            <div key={idx}>{error}</div>
           ))}
-        </ul>
+        </div>
         <label>
-          Email
+          Email:
           <input
             type="text"
             value={email}
@@ -60,7 +60,7 @@ function LoginFormModal() {
           />
         </label>
         <label>
-          Password
+          Password:
           <input
             type="password"
             value={password}
@@ -69,11 +69,11 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit">Log In</button>
-        <div className="demo-user">
+        {/* <div className="demo-user"> */}
           <button onClick={demoUser} >Demo User</button>
-        </div>
+        {/* </div> */}
       </form>
-    </>
+    </div>
   );
 }
 
