@@ -25,7 +25,7 @@ const ShoppingCart = () => {
 
     
     return (
-        <>
+        <div className='shop-cart-container'>
         <div>
             <h1>Shopping Bag</h1>
         </div>
@@ -34,7 +34,7 @@ const ShoppingCart = () => {
         ) : (
             <LoggedInShoppingCart user={user} items={items} carts={carts} cartItems={cartItems}/>
         )}
-        </>
+        </div>
     )
 
 }
