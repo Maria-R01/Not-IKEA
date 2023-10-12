@@ -101,9 +101,13 @@ def update_item_quantity(item_id):
     Update Item Quantity in Shopping Cart:
     Updates the quantity of an item in the user's shopping cart.
     """
-    cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=ShoppingCart.item_id).first()
+    cart_item = ShoppingCart.query.filter_by(item_id=item_id, user_id=current_user.id).first()
+    # cart_item = cart_items.query.filter_by()
+    # print('----------------------------')
+    # print(current_user.id)
     # print('cartItem: ', cart_item.to_dict())
-    item = Item.query.get(item_id)
+    # print('----------------------------')
+    item = Item.query.get(cart_item.item_id)
     # print('item: ', item)
     if not cart_item:
         return jsonify({"message": "Item not found in cart"}), 404
@@ -112,7 +116,7 @@ def update_item_quantity(item_id):
         return jsonify({"message": "Item not found"}), 404
 
     new_quantity = request.json.get('updatedQuantity')
-    # print('new_quantity: ', new_quantity)
+    print('new_quantity: ', new_quantity)
     if new_quantity is None or new_quantity <= 0:
         return jsonify({"message": "Invalid quantity"}), 400
     
@@ -120,6 +124,9 @@ def update_item_quantity(item_id):
         return jsonify({"message": "Exceeds available quantity"}), 400
 
     cart_item.quantity = new_quantity
+    # print('----------------------------')
+    # print('UPDATED CART ITEM: ', cart_item.to_dict())
+    # print('----------------------------')
     db.session.commit()
     # print('updated cart item: ', cart_item.quantity)
     return jsonify({"message": "Quantity updated successfully"})
