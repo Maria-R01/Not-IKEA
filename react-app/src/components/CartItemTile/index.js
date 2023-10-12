@@ -2,7 +2,7 @@ import './CartItemTile.css';
 import { removeFromCartThunk, updateCartItemThunk } from '../../store/shoppingCart'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 const CartItemTile = ({cartItem, items, cartItems }) => {
     // console.log('ITEMS: ',items)
@@ -42,9 +42,11 @@ const CartItemTile = ({cartItem, items, cartItems }) => {
     return (
         <div className='cart-item-tile'>
         <div className='item-in-cart'>
+        <NavLink to={`/item/${cartItem.item_id}`}>
         <div className='item-image'>
             <img src={itemForCartItem?.images[0].url}></img>
         </div>
+        </NavLink>
         <div className='item-details-container'>
         <div className='top-half'>
             <div className='item-details'>
