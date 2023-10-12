@@ -8,6 +8,11 @@ body {
   margin-right: 40px;
   font-family: "Noto IKEA Latin Bold";
 }
+
+body > #root {
+  margin: auto;
+}
+
 .profile-dropdown {
   position: absolute;
   margin-top: 28px;
