@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function AddReview({user_id, item_id, reviewToEdit, setReRenderParent, reRenderParent}){
 	// console.log('user_id, item_id in add item: ', user_id, item_id)
-	console.log('EDITING REVIEW: ', reviewToEdit)
+	// console.log('EDITING REVIEW: ', reviewToEdit)
 	const history = useHistory()
 	const allReviews = useSelector((state) => state.reviews.allReviews);
 	const dispatch = useDispatch()
