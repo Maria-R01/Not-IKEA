@@ -18,6 +18,14 @@ function SignupFormModal() {
 		return emailRegex.test(email);
 	};
 
+	const validatePassword = (password) => {
+	return password.length >= 6;
+	};
+
+	const validateUsername = (username) => {
+	return username.length >= 6;
+	};
+
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -25,6 +33,15 @@ function SignupFormModal() {
 			setErrors([
 			"Please enter a valid email address."
 			]);
+			return;
+		}
+
+		if (!validateUsername(username)) {
+			setErrors(["Username must be at least 6 characters long."]);
+			return;
+		}
+		if (!validatePassword(password)) {
+			setErrors(["Password must be at least 6 characters long."]);
 			return;
 		}
 		if (password === confirmPassword) {
