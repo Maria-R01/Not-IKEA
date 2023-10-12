@@ -101,8 +101,8 @@ def update_item_quantity(item_id):
     Update Item Quantity in Shopping Cart:
     Updates the quantity of an item in the user's shopping cart.
     """
-    cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=ShoppingCart.id).first()
-    # print('cartItem: ', cart_item.quantity)
+    cart_item = ShoppingCart.query.filter_by(user_id=current_user.id, item_id=ShoppingCart.item_id).first()
+    # print('cartItem: ', cart_item.to_dict())
     item = Item.query.get(item_id)
     # print('item: ', item)
     if not cart_item:
