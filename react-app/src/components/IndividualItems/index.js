@@ -19,6 +19,7 @@ const IndividualItems = () => {
   const allReviewForItem = useSelector((state) => state.reviews.itemReviews)
   const allReviewsForUser = useSelector(state => state.reviews.userReviews)
   const itemSelector = useSelector(state => state.items.item.reviews)
+  const [addedToCart, setAddedToCart] = useState(false);
   const loggedIn = user !== null;
   // console.log("LOGGEDIN: ", loggedIn);
   const item = itemData && itemData?.find((item) => item.id === itemIdNum);
@@ -60,6 +61,10 @@ const IndividualItems = () => {
   const handleAddToCart = (e) => {
     e.preventDefault();
     dispatch(addToCartThunk(item, 1));
+    setAddedToCart(true);
+    setTimeout(() => {
+        setAddedToCart(false);
+    }, 1000);
   };
 
   const [reRenderParent, setReRenderParent]= useState(false)
@@ -98,7 +103,11 @@ const IndividualItems = () => {
         {loggedIn && (
           <div className="add-to-cart-button-container">
             <button className="add-cart-button" onClick={handleAddToCart}>
-              <i className="fa-solid fa-cart-plus fa-lg"></i>
+              {addedToCart ? (
+                  <i className="fa-solid fa-check-circle fa-lg"></i>
+              ) : (
+                  <i className="fa-solid fa-cart-plus fa-lg"></i>
+              )}
             </button>
           </div>
         )}
