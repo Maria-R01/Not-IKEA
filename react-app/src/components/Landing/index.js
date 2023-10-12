@@ -22,7 +22,7 @@ const Landing = () => {
                     <h3>An IKEA Clone</h3>
                 </div>
                 <div>
-                    Enter our site to begin exploring...
+                    Enter site to begin exploring...
                 </div>
                 <div className='enter-site-button'>
                     <button onClick={enterSite}>Enter</button>
