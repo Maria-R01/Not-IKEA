@@ -134,7 +134,7 @@ def remove_item_from_cart(item_id):
     cart_item = ShoppingCart.query.get(item_id)
     if not cart_item:
         return jsonify({"message": "Item not found in cart"}), 404
-    print('cart being deleted: ', cart_item.id)
+    # print('cart being deleted: ', cart_item.id)
     db.session.delete(cart_item)
     db.session.commit()
     return jsonify({"message": "Item removed from cart successfully"})

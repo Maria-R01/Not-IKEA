@@ -30,7 +30,7 @@ def item_by_item_id(id):
     if item_by_id is None:
         return item_not_found_error(404)
     item_dict = item_by_id.to_dict()
-    print(item_dict)
+    # print(item_dict)
     return item_dict
  
 
