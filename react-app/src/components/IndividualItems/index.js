@@ -87,7 +87,7 @@ const IndividualItems = () => {
       <div className="right-side-container">
         <div className="name-price-avgRating">
           <div className="item-name">{item?.item_name}</div>
-          <div className="item-price">${item?.price}</div>
+          <div className="item-price">${item?.price.toFixed(2)}</div>
           <div className="stars-reviews-container">
             <div className="avgRating-stars">
                 ★ {item?.average_rating.toFixed(1)}

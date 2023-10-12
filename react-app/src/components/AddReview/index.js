@@ -66,17 +66,25 @@ function AddReview({user_id, item_id, reviewToEdit, setReRenderParent, reRenderP
                 <h2>Product Review</h2>
             </div>
             <div className='review-input-container'>
+                <div className='review-required-container'>
+                <label className='review-required'>Review: 
+                    <span className='astrek'> *</span>
+                </label>
+                </div>
                 <textarea 
+                required
                 value={review}
                 onChange={e => setReview(e.target.value)}
                 placeholder="Leave your review here..."
                 className="review-textarea"
                 rows='6'
-                cols='32'
+                cols='40'
                 /> 
             </div>
             <div className="stars-input-container">
-            Stars:
+            <div>
+            Stars: <span className='astrek'>*</span>
+            </div>
                 <StarRating starsRating={stars} starInputClick={starInputClick} className="starRating-input"/>
             </div>
             <div className='submit-review-button'>

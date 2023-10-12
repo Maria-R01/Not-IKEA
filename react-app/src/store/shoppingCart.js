@@ -90,7 +90,7 @@ export const updateCartItemThunk = (item, newQuantity) => async (dispatch) => {
       updatedQuantity: newQuantity,
     };
     // console.log('item thunk: ', item)
-    const response = await fetch(`/api/shopping_carts/update/${item.id}`, {
+    const response = await fetch(`/api/shopping_carts/update/${item.item_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
