@@ -28,6 +28,7 @@ function Navigation({ isLoaded }){
 				<i className="fa-solid fa-search fa-lg"></i>
 				</button>
 			</form>
+			<div className='right-icons'>
 			<div className='home-container'>
 				<NavLink exact to="/home">
 					<i class="fa-solid fa-house"></i>
@@ -46,6 +47,8 @@ function Navigation({ isLoaded }){
 					<ProfileButton user={sessionUser} />
 				</div>
 			)}
+
+			</div>
 		</div>
 		
 	);
