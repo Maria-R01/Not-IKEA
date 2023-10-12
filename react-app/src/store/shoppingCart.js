@@ -67,7 +67,7 @@ export const getAllShoppingCartsThunk = () => async (dispatch) => {
 // Thunk to add an item to the cart
 export const addToCartThunk = (item, quantity) => async (dispatch) => {
   const itemToAdd = { item, item_id: item.id, quantity }
-  console.log('item to add thunk: ', itemToAdd)
+  // console.log('item to add thunk: ', itemToAdd)
   const response = await fetch(`/api/shopping_carts/add/${item.id}`, {
     method: 'POST',
     headers: {
@@ -98,7 +98,7 @@ export const updateCartItemThunk = (item, newQuantity) => async (dispatch) => {
       body: JSON.stringify(updatedCartItemQuantity)
     });
     if (response.ok) {
-      console.log(response)
+      // console.log(response)
       dispatch(updateCartItem(updatedCartItemQuantity));
     } else {
       console.error("Failed to update cart item quantity:", response.statusText);

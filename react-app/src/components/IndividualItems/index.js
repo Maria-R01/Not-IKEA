@@ -20,9 +20,9 @@ const IndividualItems = () => {
   const allReviewsForUser = useSelector(state => state.reviews.userReviews)
   const itemSelector = useSelector(state => state.items.item.reviews)
   const loggedIn = user !== null;
-  console.log("LOGGEDIN: ", loggedIn);
+  // console.log("LOGGEDIN: ", loggedIn);
   const item = itemData && itemData?.find((item) => item.id === itemIdNum);
-  console.log("individual item: ", item);
+  // console.log("individual item: ", item);
   const itemImagesArr = item && item.images;
   // console.log("item images: ", itemImagesArr)
   const itemsReviewsArr =
@@ -32,7 +32,7 @@ const IndividualItems = () => {
       const bTime = Date.parse(b.updated_at);
       return bTime - aTime;
     });
-  console.log("item reviews: ", itemsReviewsArr);
+  // console.log("item reviews: ", itemsReviewsArr);
 
   const formattedPrice = item?.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
@@ -48,7 +48,7 @@ const IndividualItems = () => {
     return itemsReviewsArr && itemsReviewsArr[index];
   };
   const userHasReview = userReviewIndex() !== -1;
-  console.log("userReview: ", userReview(userReviewIndex()));
+  // console.log("userReview: ", userReview(userReviewIndex()));
   const formattedDate = (timeStamp) => {
     return new Date(timeStamp).toLocaleString("en-US", {
       month: "long",
