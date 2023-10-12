@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import './ItemTile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCartThunk } from '../../store/shoppingCart'
+import { useState } from 'react';
 
 
 const ItemTile = ({ item }) => {
@@ -10,14 +11,19 @@ const ItemTile = ({ item }) => {
 
     const user = useSelector(state => state.session.user)
     const loggedIn = user !== null
+    const [addedToCart, setAddedToCart] = useState(false);
 
     const handleAddToCart = (e) => {
         e.preventDefault()
         dispatch(addToCartThunk(item, 1));
+        setAddedToCart(true);
+        setTimeout(() => {
+            setAddedToCart(false);
+        }, 1000);
     };
 
     const formattedPrice = item.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-
+    
     return (
         <div className='item-tile'>
             <NavLink to={`/item/${item.id}`}>
@@ -32,7 +38,11 @@ const ItemTile = ({ item }) => {
                                 {loggedIn && (
                                     <div className='add-cart-button'>
                                         <button onClick={handleAddToCart}>
-                                            <i className="fa-solid fa-cart-plus fa-lg"></i>
+                                        {addedToCart ? (
+                                        <i className="fa-solid fa-check-circle fa-lg"></i>
+                                    ) : (
+                                        <i className="fa-solid fa-cart-plus fa-lg"></i>
+                                    )}
                                         </button>
                                     </div>
                                 )}
