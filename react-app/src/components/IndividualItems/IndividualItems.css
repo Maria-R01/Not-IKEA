@@ -48,7 +48,7 @@
 }
 
 .right-side-container {
-    width: 440px;
+    width: 430px;
 }
 
 .description-container {
@@ -108,4 +108,8 @@
     padding: 10px;
     width: 70px;
     margin-top: 15px;
+}
+
+.images-and-name-container {
+    margin-left: 10px;
 }
