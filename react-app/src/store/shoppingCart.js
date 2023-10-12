@@ -160,7 +160,7 @@ const shoppingCartReducer = (state = initialState, action) => {
 
         // Calculate the new cart total
         const updatedCartTotal = updatedCartItems.reduce(
-          (total, cartItem) => total + cartItem.item.price * cartItem.quantity,
+          (total, cartItem) => total + cartItem.item?.price * cartItem.quantity,
           0
         );
 

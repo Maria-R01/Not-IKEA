@@ -9,6 +9,7 @@ import Landing from "./components/Landing"
 import HomePage from "./components/HomePage"
 import IndividualItems from "./components/IndividualItems"
 import ShoppingCart from "./components/ShoppingCart"
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
           <Route exact path ="/cart" component={ShoppingCart} />
         </Switch>
       )}
+      <Footer />
     </>
   );
 }
