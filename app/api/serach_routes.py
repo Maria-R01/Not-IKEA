@@ -10,7 +10,7 @@ def search_posts(searchInput):
     # print('searchinput: ', searchInput)
     # print('---------------------')
     searched_item = Item.query.filter(or_(Item.item_name.ilike(
-        f"%{searchInput}%"), Item.price.ilike(f"%{searchInput}%"), Item.description.ilike(f"%{searchInput}%"))).all()
+        f"%{searchInput}%"), Item.description.ilike(f"%{searchInput}%"))).all()
     item_lists = [item.to_dict() for item in searched_item]
     # print('---------------------')
     # print('item_list :', item_lists)
