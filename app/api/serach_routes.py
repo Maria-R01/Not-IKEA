@@ -6,8 +6,6 @@ search_routes = Blueprint('search', __name__)
 
 @search_routes.route("/<searchInput>", methods=["GET"])
 def search_posts(searchInput):
-    min_price = 1
-    max_price = 1000
     # print('---------------------')
     # print('searchinput: ', searchInput)
     # print('---------------------')
