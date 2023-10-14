@@ -75,11 +75,14 @@ function AddReview({user_id, item_id, reviewToEdit, setReRenderParent, reRenderP
                 required
                 value={review}
                 onChange={e => setReview(e.target.value)}
-                placeholder="Leave your review here..."
+                placeholder="Leave your review here (at least 10 characters)..."
                 className="review-textarea"
                 rows='6'
                 cols='40'
                 /> 
+                <div className="char-count">
+                    {review.length} / 10 characters
+                </div>
             </div>
             <div className="stars-input-container">
             <div>
