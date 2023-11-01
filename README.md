@@ -7,7 +7,7 @@ A clone of the IKEA website.
 - [Features](#features)
 - [Landing Page](#landing-page)
 - [Screenshots](#screenshots)
-- [Tech Stacks](#tech-stack)
+- [Tech Stacks](#tech-stacks)
 - [Database Schema](#database-schema)
 
 
