@@ -2,6 +2,15 @@
 
 A clone of the IKEA website.
 
+# Index 
+- [About](#about)
+- [Features](#features)
+- [Landing Page](#landing-page)
+- [Screenshots](#screenshots)
+- [Tech Stacks](#tech-stack)
+- [Database Schema](#database-schema)
+
+
 ## About
 
 This project is a clone of the official IKEA website, aiming to replicate its core functionality and design. It provides users with an immersive online shopping experience for furniture, home decor, and more.
@@ -17,3 +26,16 @@ This project is a clone of the official IKEA website, aiming to replicate its co
 
 To get started, you can visit our [NotIKEA](https://notikea-2t7l.onrender.com). Here, you will find access to the Login and Signup pages. A demo user button has been provided for you to explore the website without the need to sign up.
 
+## Screenshots
+
+## Tech Stacks
+- React
+- Redux
+- HTML/CSS
+- JavaScript
+- Python
+- Flask
+- Docker
+- SQL
+
+## Database Schema
