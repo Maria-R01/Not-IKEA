@@ -41,6 +41,10 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
+  const accountAction = () => {
+    history.push('/account')
+    setShowMenu(false)
+  }
 
   return (
     <>
@@ -52,6 +56,9 @@ function ProfileButton({ user }) {
           <>
             <div>{user.username}</div>
             <div>{user.email}</div>
+            <div>
+              <button onClick={accountAction} className="logout-button">Account</button>
+            </div>
             <div>
               <button onClick={handleLogout} className="logout-button">Log Out</button>
             </div>
