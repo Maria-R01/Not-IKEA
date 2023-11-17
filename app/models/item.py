@@ -19,6 +19,8 @@ class Item(db.Model):
     # shopping_carts = db.relationship("ShoppingCart", back_populates="items", cascade="all, delete-orphan")
     item_shopping_cart =  db.relationship("ShoppingCart", back_populates="items", cascade="all, delete-orphan")
     item_image = db.relationship("Image", back_populates="item", cascade="all, delete-orphan")
+    wishlist_items = db.relationship("WishlistItem", back_populates="item", cascade="all, delete-orphan")
+
 
     def average_rating(self):
         total_stars = sum(review.stars for review in self.reviews)
@@ -31,7 +33,7 @@ class Item(db.Model):
         # Get the total review count for the item
         return len(self.reviews)
 
-    def to_dict(self, images=True, reviews=True):
+    def to_dict(self, images=True, reviews=True, wishlist_items=True):
         item_dict = {
         'id': self.id,
         "item_name": self.item_name,
@@ -69,6 +71,17 @@ class Item(db.Model):
             item_dict["reviews"] = item_reviews_list
             item_dict["average_rating"] = self.average_rating()
             item_dict["review_count"] = self.review_count()
+
+        if wishlist_items:
+            item_wishlist_items_list = []
+            for wishlist_item in self.wishlist_items:
+                item_wishlist_items_list.append({
+                'id': wishlist_item.id,
+                'user_id': wishlist_item.user_id,
+                'item_id': wishlist_item.item_id,
+                'in_wishlist': wishlist_item.in_wishlist,
+                })
+            item_dict["wishlist_items"] = item_wishlist_items_list
 
         return item_dict
 

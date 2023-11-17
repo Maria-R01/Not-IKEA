@@ -25,6 +25,10 @@
     margin-bottom: 10px;
 }
 
+i.fa-heart.fa-lg.heart-icon-filled {
+    color: red;
+}
+
 .add-cart-button {
     display: flex;
     align-items: center;

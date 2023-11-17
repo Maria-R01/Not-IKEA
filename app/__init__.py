@@ -12,6 +12,7 @@ from .api import item_routes
 from .api import review_routes 
 from .api import search_routes
 from .api import shopping_cart_routes
+from .api import wishlist_routes
 from .seeds import seed_commands
 from .config import Config
 from flask_bcrypt import Bcrypt
@@ -40,6 +41,7 @@ app.register_blueprint(item_routes, url_prefix='/api/items')
 app.register_blueprint(review_routes, url_prefix='/api/item_reviews')
 app.register_blueprint(shopping_cart_routes, url_prefix='/api/shopping_carts')
 app.register_blueprint(search_routes, url_prefix='/api/search-results')
+app.register_blueprint(wishlist_routes, url_prefix='/api/wishlist')
 db.init_app(app)
 Migrate(app, db)
 

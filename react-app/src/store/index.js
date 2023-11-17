@@ -5,6 +5,7 @@ import shoppingCartReducer from './shoppingCart';
 import reviewsReducer from './review';
 import itemsReducer from './item'
 import searchReducer from './search';
+import wishlistReducer from './wishlist';
 
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   items: itemsReducer,
   reviews: reviewsReducer,
   shoppingCart: shoppingCartReducer,
-  search: searchReducer
+  search: searchReducer,
+  wishlist: wishlistReducer
 });
 
 

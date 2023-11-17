@@ -23,6 +23,11 @@
     font-weight: lighter;
 } */
 
+.heart-icon-filled {
+    border: 1px solid red;
+  }
+  
+
 .add-cart-button{
     border-radius: 50%;
     height: 40px;

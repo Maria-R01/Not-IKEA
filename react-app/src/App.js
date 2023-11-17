@@ -12,6 +12,7 @@ import ShoppingCart from "./components/ShoppingCart"
 import Footer from "./components/Footer";
 import SearchResults from './components/SearchResults'
 import AccountManagement from "./components/AccountManagement";
+import Wishlist from "./components/Wishlist";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
           <Route exact path ="/cart" component={ShoppingCart} />
           <Route exact path ='/search-results/:searchInput' component={SearchResults} />
           <Route exact path = '/account' component={AccountManagement} />
+          <Route exact path = '/wishlist' component={Wishlist} />
         </Switch>
       )}
       <Footer />

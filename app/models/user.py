@@ -16,7 +16,8 @@ class User(db.Model, UserMixin):
 
     reviews = db.relationship("Review", back_populates="user", cascade="all, delete-orphan")
     shopping_cart = db.relationship("ShoppingCart", back_populates="users", cascade="all, delete-orphan")
-    
+    wishlist_items = db.relationship("WishlistItem", back_populates="user", cascade="all, delete-orphan")
+
 
     @property
     def password(self):
@@ -33,5 +34,6 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'wishlist_items': [item.to_dict() for item in self.wishlist_items]
         }
