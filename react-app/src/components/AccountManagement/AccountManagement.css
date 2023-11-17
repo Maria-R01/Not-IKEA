@@ -45,3 +45,14 @@
     font-family: "Noto IKEA Latin Bold";
     outline: none;
 }
+
+.success-message {
+    margin-top: 1%;
+    color: rgb(0,89,163);
+}
+
+.line {
+    width: 98.5%;
+    border: 1px solid black;
+    margin-bottom: 2%;
+}
