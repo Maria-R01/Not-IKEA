@@ -46,9 +46,11 @@ def update_user(id):
     user.email = data['email']
     user.username = data['username']
     if 'password' in data:
-        # Hash the new password
-        hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-        user.password = hashed_password
+        user.password = data['password']
+    # if 'password' in data:
+    #     # Hash the new password
+    #     hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    #     user.password = hashed_password
 
     db.session.commit()
     return jsonify(user.to_dict())
