@@ -11,7 +11,7 @@ import IndividualItems from "./components/IndividualItems"
 import ShoppingCart from "./components/ShoppingCart"
 import Footer from "./components/Footer";
 import SearchResults from './components/SearchResults'
-import Search from "./components/Search";
+import AccountManagement from "./components/AccountManagement";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ function App() {
           <Route exact path ="/item/:itemId" component={IndividualItems} />
           <Route exact path ="/cart" component={ShoppingCart} />
           <Route exact path ='/search-results/:searchInput' component={SearchResults} />
+          <Route exact path = '/account' component={AccountManagement} />
         </Switch>
       )}
       <Footer />
