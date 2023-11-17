@@ -40,9 +40,10 @@ function AccountManagement() {
     
 
     return (
-        <>
+        <div className='account-overall-container'>
             <h1>My Account</h1>
-            <div>
+            <p>Manage your account information. Here you can edit your email, username and password.</p>
+            <div className='label-container'>
                 <label>Email:</label>
                 {editMode ? (
                     <input
@@ -55,7 +56,7 @@ function AccountManagement() {
                     <span>{user.email}</span>
                 )}
             </div>
-            <div>
+            <div className='label-container'>
                 <label>Username:</label>
                 {editMode ? (
                     <input
@@ -69,7 +70,7 @@ function AccountManagement() {
                 )}
             </div>
             {editMode && (
-                <div>
+                <div className='label-container'>
                     <label>Password:</label>
                     <input
                         type="password"
@@ -81,15 +82,17 @@ function AccountManagement() {
             )}
             <div>
                 {editMode ? (
-                    <>
+                    <div className='edit-mode-buttons-container'>
                         <button onClick={handleSaveClick}>Save</button>
                         <button onClick={handleCancelClick}>Cancel</button>
-                    </>
+                    </div>
                 ) : (
-                    <button onClick={handleEditClick}>Edit</button>
+                    <div className='not-edit-mode-buttons-container'>
+                        <button onClick={handleEditClick}>Edit</button>
+                    </div>
                 )}
             </div>
-        </>
+        </div>
     );
 }
 
