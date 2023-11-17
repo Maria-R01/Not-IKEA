@@ -14,8 +14,10 @@ from .api import search_routes
 from .api import shopping_cart_routes
 from .seeds import seed_commands
 from .config import Config
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
+bcrypt = Bcrypt(app)
 
 # Setup login manager
 login = LoginManager(app)
